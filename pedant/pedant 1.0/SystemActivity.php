@@ -1,5 +1,4 @@
 <?php
-session_start();
 class pedantSystemActivity extends AbstractSystemActivityAPI
 {
  
@@ -54,7 +53,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             throw new Exception(PEDANT_FLAG . ' input is incorrect');
         }
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.demo.pedant.ai/external/upload-file",
+            CURLOPT_URL => "https://api.pedant.ai/external/upload-file",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -93,6 +92,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     }
     protected function checkFile()
     {
+        $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
             $wartezeit="600S";
@@ -107,7 +107,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' .$this->getSystemActivityVar('FILEID'),
+            CURLOPT_URL => 'https://api.pedant.ai/external/invoices?fileId=' .$this->getSystemActivityVar('FILEID'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -141,9 +141,18 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 		
 		$falseStates = ['processing', 'failed', 'uploaded'];
 
-        if (!isset($_SESSION['isExecuted']) && $data["data"][0]["status"] == "uploaded") {
-            $this->storeOutputParameter('tempJSON', $data[0]);
-            $_SESSION['isExecuted'] = true;
+        $temp = "SELECT fileid
+                 FROM pedantSystemActivity
+                 WHERE incident = -" .$this->resolveInputParameter('incident');
+        $result = $jobDB->query($temp);
+        $row = $jobDB->fetchAll($result);
+
+        if ($row[0]["fileid"] != $file && $data["data"][0]["status"] == "uploaded") {
+            error_log("JSONNNNN");
+            $this->storeOutputParameter('tempJSON', json_encode($data));
+            $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
+                       VALUES(-" .$this->resolveInputParameter('incident') .", " ."'" .$data["data"][0]["fileId"]  ."'" .")";
+            $jobDB->exec($insert);
         }
 
         if ($data["data"][0]["fileId"] == $file && in_array($data["data"][0]["status"], $falseStates) === false) { 
@@ -151,7 +160,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $this->storeList($data);
         }
         if ($check === true) {
-            $jobDB = $this->getJobDB();
             $delete = "DELETE FROM pedantSystemActivity
                        WHERE fileid = '" .$this->getSystemActivityVar('FILEID') ."'";
             $jobDB->exec($delete);
