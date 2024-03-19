@@ -124,7 +124,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $response = curl_exec($curl);
 
 
-	   $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 0) {
             throw new JobRouterException('pull errorcode: ' . $httpcode);
@@ -145,7 +145,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $this->storeOutputParameter('tempJSON', $data[0]);
             $_SESSION['isExecuted'] = true;
         }
-        
+
         if ($data["data"][0]["fileId"] == $file && in_array($data["data"][0]["status"], $falseStates) === false) { 
             $check = true;
             $this->storeList($data);
