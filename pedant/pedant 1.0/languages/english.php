@@ -31,6 +31,7 @@ define('PEDANT_USERDATA', 'Userdata');
 
 define('PEDANT_FILEID', 'File-ID');
 define('PEDANT_INVOICEID', 'Invoice-ID');
+define('PEDANT_TEMPJSON', 'Temporary JSON-File');
 
 define('PEDANT_CITY', 'City');
 define('PEDANT_STREET', 'Street');

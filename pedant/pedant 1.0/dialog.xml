@@ -16,6 +16,7 @@
                 <outputParameters>
 					<field id='fileID' name='PEDANT_FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
                     <field id='invoiceID' name='PEDANT_INVOICEID' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='tempJSON' name='PEDANT_TEMPJSON' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
                     <field id='error' name='PEDANT_ERROR' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
                     <field id='errorMessage' name='PEDANT_ERRORMESSAGE' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
                     <field id='userData' name='PEDANT_USERDATA' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />

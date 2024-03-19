@@ -33,8 +33,8 @@ define('PEDANT_USERDATA', 'Benutzerdaten');
 //output
 
 define('PEDANT_FILEID', 'File-ID');
-
 define('PEDANT_INVOICEID', 'Rechnungs-ID');
+define('PEDANT_TEMPJSON', 'Temporäre JSON-Datei');
 
 define('PEDANT_CITY', 'Stadt');
 define('PEDANT_STREET', 'Straße');

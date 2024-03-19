@@ -1,5 +1,5 @@
 <?php
- 
+session_start();
 class pedantSystemActivity extends AbstractSystemActivityAPI
 {
  
@@ -140,7 +140,12 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $check = false;
 		
 		$falseStates = ['processing', 'failed', 'uploaded'];
-	
+
+        if (!isset($_SESSION['isExecuted']) && $data["data"][0]["status"] == "uploaded") {
+            $this->storeOutputParameter('tempJSON', $data[0]);
+            $_SESSION['isExecuted'] = true;
+        }
+        
         if ($data["data"][0]["fileId"] == $file && in_array($data["data"][0]["status"], $falseStates) === false) { 
             $check = true;
             $this->storeList($data);
