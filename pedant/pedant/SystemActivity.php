@@ -391,7 +391,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => REJECTREASON, 'value' => '28'],
                 ['name' => CURRENCY, 'value' => '29'],
                 ['name' => RESOLVEDISSUES, 'value' => '30'],
-                ['name' => EDITOR, 'value' => '30']
+                ['name' => EDITOR, 'value' => '31']
             ];
         }
         return null;
