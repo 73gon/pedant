@@ -53,7 +53,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             throw new Exception(FLAG . ' input is incorrect');
         }
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.pedant.ai/external/upload-file",
+            CURLOPT_URL => "https://api.demo.pedant.ai/external/upload-file",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -107,7 +107,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.pedant.ai/external/invoices?fileId=' .$this->getSystemActivityVar('FILEID'),
+            CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' .$this->getSystemActivityVar('FILEID'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
