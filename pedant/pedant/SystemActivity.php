@@ -10,7 +10,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
  
     public function getActivityDescription()
     {
-        return PEDANT_DESCRIPTION;
+        return READ_DESC;
     }
  
  
@@ -50,7 +50,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         } else if ($this->resolveInputParameter('flag') == 'force_skip') {
             $action = 'force_skip';
         } else {
-            throw new Exception(PEDANT_FLAG . ' input is incorrect');
+            throw new Exception(FLAG . ' input is incorrect');
         }
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.pedant.ai/external/upload-file",
@@ -309,9 +309,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data["data"][0]["status"],
             $data["data"][0]["rejectReason"],
             $data["data"][0]["currency"],
-            $data["data"][0]["resolvedIssuesCount"]
+            $data["data"][0]["resolvedIssuesCount"],
+            $data["data"][0]["file"]["senderEmail"]
         ];
-
+        
         for($i = 0; $i < count($array); $i++){
             $values3[] = $array[$i];
         }
@@ -328,68 +329,69 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if ($elementID == 'recipientDetails') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => PEDANT_RECIPIENTCOMPANYNAME, 'value' => '1'],
-                ['name' => PEDANT_RECIPIENTNAME, 'value' => '2'],
-                ['name' => PEDANT_STREET, 'value' => '3'],
-                ['name' => PEDANT_ZIPCODE, 'value' => '4'],
-                ['name' => PEDANT_CITY, 'value' => '5'],
-                ['name' => PEDANT_COUNTRY, 'value' => '6'],
-                ['name' => PEDANT_RECIPIENTVATNUMBER, 'value' => '7'],
-                ['name' => PEDANT_INTERNALNUMBER, 'value' => '8']
+                ['name' => RECIPIENTCOMPANYNAME, 'value' => '1'],
+                ['name' => RECIPIENTNAME, 'value' => '2'],
+                ['name' => STREET, 'value' => '3'],
+                ['name' => ZIPCODE, 'value' => '4'],
+                ['name' => CITY, 'value' => '5'],
+                ['name' => COUNTRY, 'value' => '6'],
+                ['name' => RECIPIENTVATNUMBER, 'value' => '7'],
+                ['name' => INTERNALNUMBER, 'value' => '8']
             ];
         }
  
         if ($elementID == 'vendorDetails') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => PEDANT_BANKNUMBER, 'value' => '1'],
-                ['name' => PEDANT_VAT, 'value' => '2'],
-                ['name' => PEDANT_TAXNUMBER, 'value' => '3'],
-                ['name' => PEDANT_VENDORCOMPANYNAME, 'value' => '4'],
-                ['name' => PEDANT_STREET, 'value' => '5'],
-                ['name' => PEDANT_ZIPCODE, 'value' => '6'],
-                ['name' => PEDANT_CITY, 'value' => '7'],
-                ['name' => PEDANT_COUNTRY, 'value' => '8'],
-                ['name' => PEDANT_DELIVERYDATE, 'value' => '9'],
-                ['name' => PEDANT_DELIVERYPERIOD, 'value' => '10'],
-                ['name' => PEDANT_ACCOUNTNUMBER, 'value' => '11'],
-                ['name' => PEDANT_INTERNALNUMBER, 'value' => '12']
+                ['name' => BANKNUMBER, 'value' => '1'],
+                ['name' => VAT, 'value' => '2'],
+                ['name' => TAXNUMBER, 'value' => '3'],
+                ['name' => VENDORCOMPANYNAME, 'value' => '4'],
+                ['name' => STREET, 'value' => '5'],
+                ['name' => ZIPCODE, 'value' => '6'],
+                ['name' => CITY, 'value' => '7'],
+                ['name' => COUNTRY, 'value' => '8'],
+                ['name' => DELIVERYDATE, 'value' => '9'],
+                ['name' => DELIVERYPERIOD, 'value' => '10'],
+                ['name' => ACCOUNTNUMBER, 'value' => '11'],
+                ['name' => INTERNALNUMBER, 'value' => '12']
             ];
         }
  
         if ($elementID == 'invoiceDetails') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => PEDANT_TAXRATE1, 'value' => '1'],
-                ['name' => PEDANT_TAXRATE2, 'value' => '2'],
-                ['name' => PEDANT_TAXRATE3, 'value' => '3'],
-                ['name' => PEDANT_TAXRATE4, 'value' => '4'],
-                ['name' => PEDANT_TAXRATE5, 'value' => '5'],
-                ['name' => PEDANT_TAXRATE6, 'value' => '6'],
-                ['name' => PEDANT_TAXRATE7, 'value' => '7'],
-                ['name' => PEDANT_TAXRATE8, 'value' => '8'],
-                ['name' => PEDANT_TAXRATE9, 'value' => '9'],
-                ['name' => PEDANT_TAXRATE10, 'value' => '10'],
-                ['name' => PEDANT_INVOICENUMBER, 'value' => '11'],
-                ['name' => PEDANT_DATE, 'value' => '12'],
-                ['name' => PEDANT_NETAMOUNT, 'value' => '13'],
-                ['name' => PEDANT_TAXAMOUNT, 'value' => '14'],
-                ['name' => PEDANT_GROSSAMOUNT, 'value' => '15'],
-                ['name' => PEDANT_TAXRATE, 'value' => '16'],
-                ['name' => PEDANT_PROJECTNUMBER, 'value' => '17'],
-                ['name' => PEDANT_PURCHASEORDER, 'value' => '18'],
-                ['name' => PEDANT_PURCHASEDATE, 'value' => '19'],
-                ['name' => PEDANT_HASDISCOUNT, 'value' => '20'],
-                ['name' => PEDANT_REFUND, 'value' => '21'],
-                ['name' => PEDANT_DISCOUNTPERCENTAGE, 'value' => '22'],
-                ['name' => PEDANT_DISCOUNTAMOUNT, 'value' => '23'],
-                ['name' => PEDANT_DISCOUNTDATE, 'value' => '24'],
-                ['name' => PEDANT_INVOICETYPE, 'value' => '25'],
-                ['name' => PEDANT_NOTE, 'value' => '26'],
-                ['name' => PEDANT_STATUS, 'value' => '27'],
-                ['name' => PEDANT_REJECTREASON, 'value' => '28'],
-                ['name' => PEDANT_CURRENCY, 'value' => '29'],
-                ['name' => PEDANT_RESOLVEDISSUES, 'value' => '30']
+                ['name' => TAXRATE1, 'value' => '1'],
+                ['name' => TAXRATE2, 'value' => '2'],
+                ['name' => TAXRATE3, 'value' => '3'],
+                ['name' => TAXRATE4, 'value' => '4'],
+                ['name' => TAXRATE5, 'value' => '5'],
+                ['name' => TAXRATE6, 'value' => '6'],
+                ['name' => TAXRATE7, 'value' => '7'],
+                ['name' => TAXRATE8, 'value' => '8'],
+                ['name' => TAXRATE9, 'value' => '9'],
+                ['name' => TAXRATE10, 'value' => '10'],
+                ['name' => INVOICENUMBER, 'value' => '11'],
+                ['name' => DATE, 'value' => '12'],
+                ['name' => NETAMOUNT, 'value' => '13'],
+                ['name' => TAXAMOUNT, 'value' => '14'],
+                ['name' => GROSSAMOUNT, 'value' => '15'],
+                ['name' => TAXRATE, 'value' => '16'],
+                ['name' => PROJECTNUMBER, 'value' => '17'],
+                ['name' => PURCHASEORDER, 'value' => '18'],
+                ['name' => PURCHASEDATE, 'value' => '19'],
+                ['name' => HASDISCOUNT, 'value' => '20'],
+                ['name' => REFUND, 'value' => '21'],
+                ['name' => DISCOUNTPERCENTAGE, 'value' => '22'],
+                ['name' => DISCOUNTAMOUNT, 'value' => '23'],
+                ['name' => DISCOUNTDATE, 'value' => '24'],
+                ['name' => INVOICETYPE, 'value' => '25'],
+                ['name' => NOTE, 'value' => '26'],
+                ['name' => STATUS, 'value' => '27'],
+                ['name' => REJECTREASON, 'value' => '28'],
+                ['name' => CURRENCY, 'value' => '29'],
+                ['name' => RESOLVEDISSUES, 'value' => '30'],
+                ['name' => EDITOR, 'value' => '30']
             ];
         }
         return null;

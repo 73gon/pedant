@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jobrouterModuleSettings>
+
+    <module name='PEDANT'>
+
+        <functions>
+		    <function id='pedant' name='READ' description='READ_DESC'>
+                <inputParameters>
+					<field id='inputFile' name='INPUTFILE' worktable='yes' subtable='no' fixed='no' datatype='file' required='yes'/>
+					<field id='api_key' name='API_KEY' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+					<field id='internalNumber' name='INTNUMBER' worktable='yes' subtable='no' fixed='yes' datatype='varchar'/>
+					<field id='flag' name='FLAG' desc='FLAG_DESC' worktable='no' subtable='no' fixed='yes' datatype='varchar'/>
+                    <field id='note' name='NOTE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar'/>
+					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+                </inputParameters> 
+                <outputParameters>
+					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+                    <field id='invoiceID' name='INVOICEID' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='tempJSON' name='TEMPJSON' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='error' name='ERROR' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='errorMessage' name='ERRORMESSAGE' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='userData' name='USERDATA' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+					<list id='recipientDetails' name='RECIPIENTDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>					
+					<list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+                </outputParameters> 
+			</function>
+            <function id='pedant2' name='VENDOR' description='VENDOR_DESC'>
+                <inputParameters>
+					<field id='api_key' name='API_KEY' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+					<field id='internalNumber' name='INTNUMBER' worktable='yes' subtable='no' fixed='yes' datatype='varchar'/>
+					<field id='flag' name='FLAG' desc='FLAG_DESC' worktable='no' subtable='no' fixed='yes' datatype='varchar'/>
+                    <field id='note' name='NOTE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar'/>
+					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+                </inputParameters> 
+                <outputParameters>
+					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
+                    <field id='invoiceID' name='INVOICEID' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='tempJSON' name='TEMPJSON' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='error' name='ERROR' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='errorMessage' name='ERRORMESSAGE' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+                    <field id='userData' name='USERDATA' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
+					<list id='recipientDetails' name='RECIPIENTDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>					
+					<list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+                </outputParameters> 
+            </function>
+        </functions>
+        <simulation>
+            <behavior id='EXECUTE' name='CONST_ACT_SIM_EXECUTE' desc='CONST_ACT_SIM_EXECUTE_DESC' />
+            <behavior id='SUCCESS' name='CONST_ACT_SIM_SUCCESS' desc='CONST_ACT_SIM_SUCCESS_DESC' />
+            <behavior id='ERROR' name='CONST_ACT_SIM_ERROR' desc='CONST_ACT_SIM_ERROR_DESC' />
+        </simulation>
+    </module>
+</jobrouterModuleSettings>
