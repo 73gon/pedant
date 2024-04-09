@@ -46,6 +46,17 @@ define('ZIPCODE', 'Postleitzahl');
 define('COUNTRY', 'Land');
 define('INTERNALNUMBER', 'interne Nummer');
 
+define('VENDORTABLE', 'Lieferanten-Tabelle');
+define('POSTVENDOR', 'Lieferantkonfiguration');
+	define('PROFILNAME', 'Profilname');
+	define('RECIPIENTGROUPID', 'Mandantennummer');
+	define('VENDORNAME', 'Lieferantenname');
+	define('KVK', 'KvK-Nummer');
+	define('VATNUMBER', 'Umsatzsteuer-ID');
+
+define('RECIPIENTTABLE', 'Empfänger-Tabelle');
+define('POSTRECIPIENT', 'Empfängerkonfiguration');
+
 define('RECIPIENTDETAILS', 'Empfängerdaten');
 	define('RECIPIENTCOMPANYNAME', 'Firmenname');
 	define('RECIPIENTNAME', 'Empfängername');

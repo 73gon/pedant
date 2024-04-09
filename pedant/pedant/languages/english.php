@@ -44,6 +44,15 @@ define('ZIPCODE', 'Zipcode');
 define('COUNTRY', 'Country');
 define('INTERNALNUMBER', 'Internalnumber');
 
+define('VENDORTABLE', 'Vendortable');
+define('POSTVENDOR', 'Vendorconfiguration');
+	define('PROFILNAME', 'Profilname');
+	define('RECIPIENTGROUPID', 'RecipientgroupID');
+	define('KVK', 'KvK-Number');
+
+define('RECIPIENTTABLE', 'Recipienttable');
+define('POSTRECIPIENT', 'Empfängerkonfiguration');
+
 define('RECIPIENTDETAILS', 'Recipientdetails');
 	define('RECIPIENTCOMPANYNAME', 'Companyname');
 	define('RECIPIENTNAME', 'Recipientname');

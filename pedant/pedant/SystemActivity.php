@@ -326,10 +326,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
  
     public function getUDL($udl, $elementID)
     {
-        if ($elementID == 'recipientDetails') {
+        if ($elementID == 'postVendor') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => RECIPIENTCOMPANYNAME, 'value' => '1'],
+                ['name' => PROFILENAME, 'value' => '1'],
                 ['name' => RECIPIENTNAME, 'value' => '2'],
                 ['name' => STREET, 'value' => '3'],
                 ['name' => ZIPCODE, 'value' => '4'],
@@ -337,6 +337,30 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => COUNTRY, 'value' => '6'],
                 ['name' => RECIPIENTVATNUMBER, 'value' => '7'],
                 ['name' => INTERNALNUMBER, 'value' => '8']
+            ];
+        }
+
+        if ($elementID == 'postRecipient') {
+            return [
+                ['name' => '-', 'value' => ''],
+                ['name' => PROFILNAME, 'value' => '1'],
+                ['name' => INTERNALNUMBER, 'value' => '2'],
+                ['name' => VENDORCOMPANYNAME, 'value' => '3'],
+                ['name' => STREET, 'value' => '4'],
+                ['name' => CITY, 'value' => '5'],
+                ['name' => COUNTRY, 'value' => '6'],
+                ['name' => ZIPCODE, 'value' => '7'],
+                ['name' => CURRENCY, 'value' => '8'],
+                ['name' => KVK, 'value' => '9'],
+                ['name' => VAT, 'value' => '10'],
+                ['name' => TAXNUMBER, 'value' => '11'],
+                ['name' => BANKNUMBER, 'value' => '12']
+            ];
+        }
+
+        if ($elementID == 'recipientDetails') {
+            return [
+                ['name' => '-', 'value' => '']
             ];
         }
  
