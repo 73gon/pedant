@@ -2,7 +2,6 @@
 <jobrouterModuleSettings>
 
     <module name='PEDANT'>
-
         <functions>
 		    <function id='pedant' name='READ' description='READ_DESC'>
                 <inputParameters>

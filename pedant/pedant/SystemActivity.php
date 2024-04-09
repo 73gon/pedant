@@ -36,6 +36,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
  
     protected function uploadFile()
     {
+        $this->postVendor();
         $curl = curl_init();
         $file = $this->getUploadPath() .$this->resolveInputParameter('inputFile');
         $action = 'normal';
@@ -148,7 +149,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $row = $jobDB->fetchAll($result);
 
         if ($row[0]["fileid"] != $file && $data["data"][0]["status"] == "uploaded") {
-            error_log("JSONNNNN");
             $this->storeOutputParameter('tempJSON', json_encode($data));
             $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
                        VALUES(-" .$this->resolveInputParameter('incident') .", " ."'" .$data["data"][0]["fileId"]  ."'" .")";
@@ -237,6 +237,29 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         } else {
             $JobDB->exec($table);
             return false;
+        }
+    }
+
+    protected function postVendor()
+    {
+        $table = $this->resolveInputParameter('vendorTable');
+        error_log($this->resolveInputParameter('postVendor'));
+
+        if(empty($table)){
+            return;
+        }
+
+        $JobDB = $this->getJobDB();
+
+        $temp = "SELECT jrid, NUMMER, NAME, GROUP_CONCAT(IBAN SEPARATOR ',') AS IBANs
+                 FROM " .$table ."
+                 GROUP BY NUMMER
+                 LIMIT 10";
+
+        $result = $JobDB->query($temp);
+
+        while ($row = $JobDB->fetchAll($result)) {
+            error_log($row);
         }
     }
  
