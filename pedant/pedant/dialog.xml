@@ -12,10 +12,10 @@
 					<field id='flag' name='FLAG' desc='FLAG_DESC' worktable='no' subtable='no' fixed='yes' datatype='varchar'/>
                     <field id='note' name='NOTE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar'/>
 					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
-                    <field id='vendorTable' name='VENDORTABLE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar' required='yes'/>
-                    <list id="postVendor" name="POSTVENDOR" worktable="yes" subtable="no" fixed="no" datatype="varchar" required="yes" udl="yes"/>
-                    <field id='recipientTable' name='RECIPIENTTABLE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar' required='yes'/>
-                    <list id="postRecipient" name="POSTRECIPIENT" worktable="yes" subtable="no" fixed="no" datatype="varchar" required="no" udl="yes"/>
+                    <field id='vendorTable' name='VENDORTABLE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar' required='no'/>
+                    <field id='recipientTable' name='RECIPIENTTABLE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar' required='no'/>
+                    <list id="postVendor" name="POSTVENDOR" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
+                    <list id="postRecipient" name="POSTRECIPIENT" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
                 </inputParameters> 
                 <outputParameters>
 					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>

@@ -329,20 +329,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if ($elementID == 'postVendor') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => PROFILENAME, 'value' => '1'],
-                ['name' => RECIPIENTNAME, 'value' => '2'],
-                ['name' => STREET, 'value' => '3'],
-                ['name' => ZIPCODE, 'value' => '4'],
-                ['name' => CITY, 'value' => '5'],
-                ['name' => COUNTRY, 'value' => '6'],
-                ['name' => RECIPIENTVATNUMBER, 'value' => '7'],
-                ['name' => INTERNALNUMBER, 'value' => '8']
-            ];
-        }
-
-        if ($elementID == 'postRecipient') {
-            return [
-                ['name' => '-', 'value' => ''],
                 ['name' => PROFILNAME, 'value' => '1'],
                 ['name' => INTERNALNUMBER, 'value' => '2'],
                 ['name' => VENDORCOMPANYNAME, 'value' => '3'],
@@ -358,9 +344,23 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             ];
         }
 
-        if ($elementID == 'recipientDetails') {
+        if ($elementID == 'postRecipient') {
             return [
                 ['name' => '-', 'value' => '']
+            ];
+        }
+
+        if ($elementID == 'recipientDetails') {
+            return [
+                ['name' => '-', 'value' => ''],
+                ['name' => RECIPIENTCOMPANYNAME, 'value' => '1'],
+                ['name' => RECIPIENTNAME, 'value' => '2'],
+                ['name' => STREET, 'value' => '3'],
+                ['name' => ZIPCODE, 'value' => '4'],
+                ['name' => CITY, 'value' => '5'],
+                ['name' => COUNTRY, 'value' => '6'],
+                ['name' => RECIPIENTVATNUMBER, 'value' => '7'],
+                ['name' => INTERNALNUMBER, 'value' => '8']
             ];
         }
  
