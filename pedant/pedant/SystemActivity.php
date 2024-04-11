@@ -36,7 +36,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
  
     protected function uploadFile()
     {
-        $this->postVendor();
+        $this->postVendorDetails();
         $curl = curl_init();
         $file = $this->getUploadPath() .$this->resolveInputParameter('inputFile');
         $action = 'normal';
@@ -240,27 +240,69 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         }
     }
 
-    protected function postVendor()
+    protected function postVendorDetails()
     {
         $table = $this->resolveInputParameter('vendorTable');
-        error_log($this->resolveInputParameter('postVendor'));
+        $listfields = $this->resolveInputParameterListValues('postVendor');
+        $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
+
+        $list = array();
+        foreach ($listfields as $listfield => $listvalue) {
+            $list[$listvalue] = $listfield;
+        }
+        error_log(print_r($list, true));
 
         if(empty($table)){
             return;
         }
 
         $JobDB = $this->getJobDB();
-
-        $temp = "SELECT jrid, NUMMER, NAME, GROUP_CONCAT(IBAN SEPARATOR ',') AS IBANs
-                 FROM " .$table ."
+        /*
+        $temp = "SELECT " .$list[$listvalue] ." AS " .$fields[$listvalue]
+                 ."FROM " .$table ."
                  GROUP BY NUMMER
                  LIMIT 10";
 
         $result = $JobDB->query($temp);
 
-        while ($row = $JobDB->fetchAll($result)) {
-            error_log($row);
+        while ($row = $JobDB->fetchRow($result)) {
+
+            $data = [];
+
+            foreach ($fields as $index => $field) {
+                if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$list[$index]]) && !empty($row[$list[$index]])) {
+                    $result[$field] = explode(',', $row[$list[$index]]);
+                } else {
+                    $result[$field] = isset($row[$list[$index]]) && !empty($row[$list[$index]]) ? $row[$list[$index]] : '';
+                }
+            }
+            
+            $payload = json_encode($data);
+            
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'X-API-KEY: ' . $this->resolveInputParameter('api_key')
+            ),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0
+            ));
+    
+            $response = curl_exec($curl);
+
+            curl_close($curl);
         }
+        */
     }
  
  
