@@ -259,8 +259,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $JobDB = $this->getJobDB();
         $temp = "SELECT ";
-        foreach ($list as $listvalue => $listindex) {
-            $temp = $temp .$listvalue ." AS " .$fields[$listindex];
+        foreach ($list as $listindex => $listvalue) {
+            $temp = $temp .$listvalue ." AS " .$fields[$listindex-1] .", ";
             
         }
 
@@ -268,7 +268,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                        GROUP BY NUMMER
                        LIMIT 10";
         error_log($temp);
-        /*
+        
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
@@ -306,9 +306,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     
             $response = curl_exec($curl);
 
+
             curl_close($curl);
         }
-        */
+        
     }
  
  
@@ -402,16 +403,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => '-', 'value' => ''],
                 ['name' => PROFILNAME, 'value' => '1'],
                 ['name' => INTERNALNUMBER, 'value' => '2'],
-                ['name' => VENDORCOMPANYNAME, 'value' => '3'],
-                ['name' => STREET, 'value' => '4'],
-                ['name' => CITY, 'value' => '5'],
-                ['name' => COUNTRY, 'value' => '6'],
-                ['name' => ZIPCODE, 'value' => '7'],
-                ['name' => CURRENCY, 'value' => '8'],
-                ['name' => KVK, 'value' => '9'],
-                ['name' => VAT, 'value' => '10'],
-                ['name' => TAXNUMBER, 'value' => '11'],
-                ['name' => BANKNUMBER, 'value' => '12']
+                ['name' => RECIPIENTGROUPID, 'value' => '3'],
+                ['name' => VENDORCOMPANYNAME, 'value' => '4'],
+                ['name' => STREET, 'value' => '5'],
+                ['name' => CITY, 'value' => '6'],
+                ['name' => COUNTRY, 'value' => '7'],
+                ['name' => ZIPCODE, 'value' => '8'],
+                ['name' => CURRENCY, 'value' => '9'],
+                ['name' => KVK, 'value' => '10'],
+                ['name' => VAT, 'value' => '11'],
+                ['name' => TAXNUMBER, 'value' => '12'],
+                ['name' => BANKNUMBER, 'value' => '13']
             ];
         }
 
