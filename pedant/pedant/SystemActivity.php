@@ -260,13 +260,16 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $JobDB = $this->getJobDB();
         $temp = "SELECT ";
         foreach ($list as $listindex => $listvalue) {
-            $temp = $temp .$listvalue ." AS " .$fields[$listindex-1] .", ";
-            
+            if ($listindex === count($list) - 1) {
+            $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1];
+            } else {
+            $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1] . ", ";
+            }
         }
 
         $temp = $temp ."FROM " .$table ."
                        GROUP BY NUMMER
-                       LIMIT 10";
+                       LIMIT 5";
         error_log($temp);
         
         $result = $JobDB->query($temp);
@@ -305,7 +308,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             ));
     
             $response = curl_exec($curl);
-
+            error_log(print_r($response, true));
 
             curl_close($curl);
         }
