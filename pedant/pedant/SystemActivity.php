@@ -247,9 +247,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
         $list = array();
-        foreach ($listfields as $listfield => $listvalue) {
-            $list[$listvalue] = $listfield;
+        foreach ($listfields as $listindex => $listvalue) {
+            $list[$listindex] = $listvalue;
         }
+        ksort($list);
         error_log(print_r($list, true));
 
         if(empty($table)){
@@ -257,12 +258,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         }
 
         $JobDB = $this->getJobDB();
-        /*
-        $temp = "SELECT " .$list[$listvalue] ." AS " .$fields[$listvalue]
-                 ."FROM " .$table ."
-                 GROUP BY NUMMER
-                 LIMIT 10";
+        $temp = "SELECT ";
+        foreach ($list as $listvalue => $listindex) {
+            $temp = $temp .$listvalue ." AS " .$fields[$listindex];
+            
+        }
 
+        $temp = $temp ."FROM " .$table ."
+                       GROUP BY NUMMER
+                       LIMIT 10";
+        error_log($temp);
+        /*
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
