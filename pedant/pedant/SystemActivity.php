@@ -258,14 +258,18 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         }
 
         $JobDB = $this->getJobDB();
+        
         $temp = "SELECT ";
+        $lastKey = array_key_last($list);
+
         foreach ($list as $listindex => $listvalue) {
-                $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1] . ", ";
+            $temp .= $listvalue . " AS " . $fields[$listindex - 1];
+            if ($listindex !== $lastKey) {
+                $temp .= ", ";
+            }
         }
 
-        $temp = $temp ."FROM " .$table ."
-                       GROUP BY NUMMER
-                       LIMIT 5";
+        $temp .= " FROM " . $table . " GROUP BY NUMMER LIMIT 5";
         error_log($temp);
         
         $result = $JobDB->query($temp);
