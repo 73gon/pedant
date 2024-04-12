@@ -260,11 +260,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $JobDB = $this->getJobDB();
         $temp = "SELECT ";
         foreach ($list as $listindex => $listvalue) {
-            if ($listindex === count($list) - 1) {
-            $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1];
-            } else {
-            $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1] . ", ";
-            }
+                $temp = $temp . $listvalue . " AS " . $fields[$listindex - 1] . ", ";
         }
 
         $temp = $temp ."FROM " .$table ."
