@@ -294,7 +294,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
 
             $payload = json_encode($data);
-            error_log(print_r($payload, true));
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
@@ -316,6 +315,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             $response = curl_exec($curl);
             error_log(print_r($response, true));
+            error_log(print_r(curl_getinfo($curl, CURLINFO_HTTP_CODE), TRUE));
 
             curl_close($curl);
         }
