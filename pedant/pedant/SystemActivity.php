@@ -36,7 +36,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
     protected function uploadFile()
     {
-        $this->postVendorDetails();
         $curl = curl_init();
         $file = $this->getUploadPath() . $this->resolveInputParameter('inputFile');
         $action = 'normal';
@@ -95,6 +94,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     }
     protected function checkFile()
     {
+        $this->postVendorDetails();
+
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
@@ -253,7 +254,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $list[$listindex] = $listvalue;
         }
         ksort($list);
-        error_log(print_r($list, true));
 
         if (empty($table)) {
             return;
@@ -263,11 +263,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $temp = "SELECT ";
         $lastKey = array_key_last($list);
-        $hitStrings = array();
         foreach ($list as $listindex => $listvalue) {
             if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
-                $temp .= "GROUP_CONCAT(" . $listvalue . "SEPARATOR ',') AS " . $fields[$listindex - 1];
-                $hitStrings[] = $fields[$listindex - 1];
+                $temp .= "GROUP_CONCAT(" . $listvalue . " SEPARATOR ',') AS " . $fields[$listindex - 1];
             } else {
                 $temp .= $listvalue . " AS " . $fields[$listindex - 1];
             }
@@ -277,9 +275,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
         }
 
-        $group = implode(", ", $hitStrings);
-
-        $temp .= " FROM " . $table . " GROUP BY " . $group . "LIMIT 5";
+        $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 5";
         error_log($temp);
 
         $result = $JobDB->query($temp);
@@ -297,6 +293,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
 
             $payload = json_encode($data);
+            error_log(print_r($payload, TRUE));
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
