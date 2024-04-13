@@ -1,24 +1,24 @@
 <?php
 class pedantSystemActivity extends AbstractSystemActivityAPI
 {
- 
+
     public function getActivityName()
     {
         return 'Pedant';
     }
- 
- 
+
+
     public function getActivityDescription()
     {
         return READ_DESC;
     }
- 
- 
+
+
     public function getDialogXml()
     {
         return file_get_contents(__DIR__ . '.\dialog.xml');
     }
- 
+
     protected function pedant()
     {
         $this->checkFILEID();
@@ -27,20 +27,20 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $this->setResubmission(1, 'm');
             $this->uploadFile();
         }
- 
+
         if ($this->isPending()) {
             $this->checkFile();
         }
     }
- 
- 
+
+
     protected function uploadFile()
     {
         $this->postVendorDetails();
         $curl = curl_init();
-        $file = $this->getUploadPath() .$this->resolveInputParameter('inputFile');
+        $file = $this->getUploadPath() . $this->resolveInputParameter('inputFile');
         $action = 'normal';
- 
+
         if ($this->resolveInputParameter('flag') == 'normal') {
             $action = 'normal';
         } else if ($this->resolveInputParameter('flag') == 'check_extraction') {
@@ -53,30 +53,32 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         } else {
             throw new Exception(FLAG . ' input is incorrect');
         }
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.demo.pedant.ai/external/upload-file",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'file' => new CURLFILE($file),
-                'recipientInternalNumber' => $this->resolveInputParameter('internalNumber'),
-                'action' => $action,
-                'note'=> $this->resolveInputParameter('note'),
-            ),
-            CURLOPT_HTTPHEADER => array('X-API-KEY: ' .$this->resolveInputParameter('api_key')),
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => "https://api.demo.pedant.ai/external/upload-file",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'file' => new CURLFILE($file),
+                    'recipientInternalNumber' => $this->resolveInputParameter('internalNumber'),
+                    'action' => $action,
+                    'note' => $this->resolveInputParameter('note'),
+                ),
+                CURLOPT_HTTPHEADER => array('X-API-KEY: ' . $this->resolveInputParameter('api_key')),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0
             )
         );
         $response = curl_exec($curl);
- 
+
         $data = json_decode($response, TRUE);
- 
+
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($httpcode != 201) {
             throw new JobRouterException('post errorcode: ' . $httpcode);
@@ -84,7 +86,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         curl_close($curl);
         $jobDB = $this->getJobDB();
         $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
-                   VALUES(" .$this->resolveInputParameter('incident') .", " ."'" .$data[0]['fileId']  ."'" .")";
+                   VALUES(" . $this->resolveInputParameter('incident') . ", " . "'" . $data[0]['fileId']  . "'" . ")";
         $jobDB->exec($insert);
         $this->storeOutputParameter('fileID', $data[0]["fileId"]);
         $this->storeOutputParameter('invoiceID', $data[0]["invoiceId"]);
@@ -96,77 +98,79 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
-            $wartezeit="600S";
+            $wartezeit = "600S";
         } else if (date("H") < 6) {
             $time = 6 - date("H");
             $this->setResubmission($time, 'h');
-            $wartezeit="12H";
+            $wartezeit = "12H";
         } else {
             $time = 24 - date("H") + 6;
             $this->setResubmission($time, 'h');
         }
 
         $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' .$this->getSystemActivityVar('FILEID'),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array('X-API-KEY: ' .$this->resolveInputParameter('api_key')),
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0
-        )
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' . $this->getSystemActivityVar('FILEID'),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array('X-API-KEY: ' . $this->resolveInputParameter('api_key')),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0
+            )
         );
- 
+
         $response = curl_exec($curl);
 
 
-	    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 0) {
             throw new JobRouterException('pull errorcode: ' . $httpcode);
         }
-        if($httpcode == 503 || $httpcode == 502 || $httpcode == 0){
+        if ($httpcode == 503 || $httpcode == 502 || $httpcode == 0) {
             $this->setResubmission(10, 'm');
-			$wartezeit="10M";
+            $wartezeit = "10M";
         }
         curl_close($curl);
- 
+
         $data = json_decode($response, TRUE);
         $file = $this->getSystemActivityVar('FILEID');
         $check = false;
-		
-		$falseStates = ['processing', 'failed', 'uploaded'];
+
+        $falseStates = ['processing', 'failed', 'uploaded'];
 
         $temp = "SELECT fileid
                  FROM pedantSystemActivity
-                 WHERE incident = -" .$this->resolveInputParameter('incident');
+                 WHERE incident = -" . $this->resolveInputParameter('incident');
         $result = $jobDB->query($temp);
         $row = $jobDB->fetchAll($result);
 
         if ($row[0]["fileid"] != $file && $data["data"][0]["status"] == "uploaded") {
             $this->storeOutputParameter('tempJSON', json_encode($data));
             $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
-                       VALUES(-" .$this->resolveInputParameter('incident') .", " ."'" .$data["data"][0]["fileId"]  ."'" .")";
+                       VALUES(-" . $this->resolveInputParameter('incident') . ", " . "'" . $data["data"][0]["fileId"]  . "'" . ")";
             $jobDB->exec($insert);
         }
 
-        if ($data["data"][0]["fileId"] == $file && in_array($data["data"][0]["status"], $falseStates) === false) { 
+        if ($data["data"][0]["fileId"] == $file && in_array($data["data"][0]["status"], $falseStates) === false) {
             $check = true;
             $this->storeList($data);
         }
         if ($check === true) {
             $delete = "DELETE FROM pedantSystemActivity
-                       WHERE fileid = '" .$this->getSystemActivityVar('FILEID') ."'";
+                       WHERE fileid = '" . $this->getSystemActivityVar('FILEID') . "'";
             $jobDB->exec($delete);
             $this->markActivityAsCompleted();
         }
     }
- 
+
     protected function isMySQL()
     {
         $jobDB = $this->getJobDB();
@@ -176,12 +180,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             throw new JobRouterException($jobDB->getErrorMessage());
         }
         $row = $jobDB->fetchAll($res);
-        if(substr($row[0]["versionName"], 0, 9) == "Microsoft")
-        {
+        if (substr($row[0]["versionName"], 0, 9) == "Microsoft") {
             return false;
-        }else
-        {
-        return true;
+        } else {
+            return true;
         }
     }
     protected function checkFILEID()
@@ -192,7 +194,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                                            FROM information_schema.tables
                                            WHERE table_name = 'pedantSystemActivity'
                                           ) AS versionExists";
-			$result = $JobDB->query($tableExists);					  
+            $result = $JobDB->query($tableExists);
             $existing = $JobDB->fetchAll($result);
             return $this->checkID($existing[0]["versionExists"]);
         } else {
@@ -204,24 +206,24 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                                 SET @table_exists = 0;
  
                             SELECT @table_exists AS versionExists";
-            $result = $JobDB->query($tableExists);	
+            $result = $JobDB->query($tableExists);
             $existing = $JobDB->fetchAll($result);
             return $this->checkID($existing[0]["versionExists"]);
         }
     }
- 
+
     protected function checkID($var)
     {
         $JobDB = $this->getJobDB();
         $id = "SELECT *
                FROM pedantSystemActivity
-               WHERE incident = '" .$this->resolveInputParameter('incident') . "'";
+               WHERE incident = '" . $this->resolveInputParameter('incident') . "'";
         $table = "CREATE TABLE pedantSystemActivity (
                   incident INT NOT NULL PRIMARY KEY,
                   fileid NVARCHAR(50) NOT NULL)";
- 
+
         if ($var == 1) {
-			$result = $JobDB->query($id);
+            $result = $JobDB->query($id);
             $count = 0;
             while ($row = $JobDB->fetchRow($result)) {
                 $count++;
@@ -253,25 +255,33 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         ksort($list);
         error_log(print_r($list, true));
 
-        if(empty($table)){
+        if (empty($table)) {
             return;
         }
 
         $JobDB = $this->getJobDB();
-        
+
         $temp = "SELECT ";
         $lastKey = array_key_last($list);
-
+        $hitStrings = array();
         foreach ($list as $listindex => $listvalue) {
-            $temp .= $listvalue . " AS " . $fields[$listindex - 1];
+            if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
+                $temp .= "GROUP_CONCAT(" . $listvalue . "SEPARATOR ',') AS " . $fields[$listindex - 1];
+                $hitStrings[] = $fields[$listindex - 1];
+            } else {
+                $temp .= $listvalue . " AS " . $fields[$listindex - 1];
+            }
+
             if ($listindex !== $lastKey) {
                 $temp .= ", ";
             }
         }
 
-        $temp .= " FROM " . $table . " GROUP BY NUMMER LIMIT 5";
+        $group = implode(", ", $hitStrings);
+
+        $temp .= " FROM " . $table . " GROUP BY " . $group . "LIMIT 5";
         error_log($temp);
-        
+
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
@@ -280,42 +290,41 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             foreach ($fields as $index => $field) {
                 if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$list[$index]]) && !empty($row[$list[$index]])) {
-                    $result[$field] = explode(',', $row[$list[$index]]);
+                    $data[$field] = explode(',', $row[$list[$index]]);
                 } else {
-                    $result[$field] = isset($row[$list[$index]]) && !empty($row[$list[$index]]) ? $row[$list[$index]] : '';
+                    $data[$field] = isset($row[$list[$index]]) && !empty($row[$list[$index]]) ? $row[$list[$index]] : '';
                 }
             }
-            
+
             $payload = json_encode($data);
-            
+
             $curl = curl_init();
             curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $payload,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'X-API-KEY: ' . $this->resolveInputParameter('api_key')
-            ),
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0
+                CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'X-API-KEY: ' . $this->resolveInputParameter('api_key')
+                ),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0
             ));
-    
+
             $response = curl_exec($curl);
             error_log(print_r($response, true));
 
             curl_close($curl);
         }
-        
     }
- 
- 
+
+
     public function storeList($data)
     {
         $attributes1 = $this->resolveOutputParameterListAttributes('recipientDetails');
@@ -333,7 +342,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($attributes1 as $attribute) {
             $this->setTableValue($attribute['value'], $values1[$attribute['id']]);
         }
- 
+
         $attributes2 = $this->resolveOutputParameterListAttributes('vendorDetails');
         $values2 = [
             0,
@@ -353,15 +362,15 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($attributes2 as $attribute) {
             $this->setTableValue($attribute['value'], $values2[$attribute['id']]);
         }
- 
+
         $attributes3 = $this->resolveOutputParameterListAttributes('invoiceDetails');
- 
+
         $values3 = [0];
 
-        for($i = 0; $i < 10; $i++){
-            $values3[] = $data["data"][0]["taxRates"][$i]["subNetAmount"] .";" 
-                        .$data["data"][0]["taxRates"][$i]["subTaxAmount"] .";"
-                        .$data["data"][0]["taxRates"][$i]["subTaxRate"];
+        for ($i = 0; $i < 10; $i++) {
+            $values3[] = $data["data"][0]["taxRates"][$i]["subNetAmount"] . ";"
+                . $data["data"][0]["taxRates"][$i]["subTaxAmount"] . ";"
+                . $data["data"][0]["taxRates"][$i]["subTaxRate"];
         }
 
         $array = [
@@ -387,18 +396,18 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data["data"][0]["resolvedIssuesCount"],
             $data["data"][0]["file"]["senderEmail"]
         ];
-        
-        for($i = 0; $i < count($array); $i++){
+
+        for ($i = 0; $i < count($array); $i++) {
             $values3[] = $array[$i];
         }
 
-      
+
         foreach ($attributes3 as $attribute) {
             $this->setTableValue($attribute['value'], $values3[$attribute['id']]);
         }
     }
- 
- 
+
+
     public function getUDL($udl, $elementID)
     {
         if ($elementID == 'postVendor') {
@@ -439,7 +448,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => INTERNALNUMBER, 'value' => '8']
             ];
         }
- 
+
         if ($elementID == 'vendorDetails') {
             return [
                 ['name' => '-', 'value' => ''],
@@ -457,7 +466,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => INTERNALNUMBER, 'value' => '12']
             ];
         }
- 
+
         if ($elementID == 'invoiceDetails') {
             return [
                 ['name' => '-', 'value' => ''],
