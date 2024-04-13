@@ -275,8 +275,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
         }
 
-        $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 5";
-        error_log($temp);
+        $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
 
         $result = $JobDB->query($temp);
 
@@ -285,16 +284,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data = [];
 
             foreach ($fields as $index => $field) {
-                if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$list[$index]]) && !empty($row[$list[$index]])) {
-                    $data[$field] = explode(',', $row[$list[$index]]);
+                if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$fields[$index]]) && !empty($row[$fields[$index]])) {
+                    $data[$field] = explode(',', $row[$fields[$index]]);
+                } elseif (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans'])) {
+                    $data[$field] = [];
                 } else {
-                    $data[$field] = isset($row[$list[$index]]) && !empty($row[$list[$index]]) ? $row[$list[$index]] : '';
+                    $data[$field] = isset($row[$fields[$index]]) && !empty($row[$fields[$index]]) ? $row[$fields[$index]] : '';
                 }
             }
 
             $payload = json_encode($data);
-            error_log(print_r($payload, TRUE));
-
+            error_log(print_r($payload, true));
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
