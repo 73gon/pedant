@@ -94,7 +94,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     }
     protected function checkFile()
     {
-        $this->postVendorDetails();
 
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
@@ -314,8 +313,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             ));
 
             $response = curl_exec($curl);
-            error_log(print_r($response, true));
-            error_log(print_r(curl_getinfo($curl, CURLINFO_HTTP_CODE), TRUE));
+            
+            error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
 
             curl_close($curl);
         }
@@ -391,7 +390,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data["data"][0]["rejectReason"],
             $data["data"][0]["currency"],
             $data["data"][0]["resolvedIssuesCount"],
-            $data["data"][0]["file"]["senderEmail"]
+            $data["data"][0]["auditTrail"][0]["userName"]
         ];
 
         for ($i = 0; $i < count($array); $i++) {
