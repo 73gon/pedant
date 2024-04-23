@@ -37,6 +37,7 @@ define('USERDATA', 'Userdata');
 define('FILEID', 'File-ID');
 define('INVOICEID', 'Invoice-ID');
 define('TEMPJSON', 'Temporary JSON-File');
+define('SQLQUERY', 'SQL-Query');
 
 define('CITY', 'City');
 define('STREET', 'Street');

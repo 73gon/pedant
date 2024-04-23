@@ -39,6 +39,7 @@ define('USERDATA', 'Benutzerdaten');
 define('FILEID', 'File-ID');
 define('INVOICEID', 'Rechnungs-ID');
 define('TEMPJSON', 'Temporäre JSON-Datei');
+define('SQLQUERY', 'SQL-Abfrage');
 
 define('CITY', 'Stadt');
 define('STREET', 'Straße');
@@ -54,9 +55,6 @@ define('POSTVENDOR', 'Lieferantkonfiguration');
 	define('KVK', 'KvK-Nummer');
 	define('VATNUMBER', 'Umsatzsteuer-ID');
 	define('LOCK', 'Gesperrt');
-
-define('RECIPIENTTABLE', 'Empfänger-Tabelle');
-define('POSTRECIPIENT', 'Empfängerkonfiguration');
 
 define('RECIPIENTDETAILS', 'Empfängerdaten');
 	define('RECIPIENTCOMPANYNAME', 'Firmenname');
