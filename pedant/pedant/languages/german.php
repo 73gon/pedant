@@ -53,6 +53,7 @@ define('POSTVENDOR', 'Lieferantkonfiguration');
 	define('VENDORNAME', 'Lieferantenname');
 	define('KVK', 'KvK-Nummer');
 	define('VATNUMBER', 'Umsatzsteuer-ID');
+	define('LOCK', 'Gesperrt');
 
 define('RECIPIENTTABLE', 'Empfänger-Tabelle');
 define('POSTRECIPIENT', 'Empfängerkonfiguration');

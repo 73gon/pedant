@@ -49,6 +49,7 @@ define('POSTVENDOR', 'Vendorconfiguration');
 	define('PROFILNAME', 'Profilname');
 	define('RECIPIENTGROUPID', 'RecipientgroupID');
 	define('KVK', 'KvK-Number');
+	define('LOCK', 'Locked');
 
 define('RECIPIENTTABLE', 'Recipienttable');
 define('POSTRECIPIENT', 'Empfängerkonfiguration');

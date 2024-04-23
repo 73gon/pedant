@@ -15,6 +15,19 @@
                     <field id='recipientTable' name='RECIPIENTTABLE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar' required='no'/>
                     <list id="postVendor" name="POSTVENDOR" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
                     <list id="postRecipient" name="POSTRECIPIENT" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
+                    <field id="vSqlQuery" name="SQLQUERY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vInternalNumber" name="INTERNALVENDORNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vProfileName" name="PROFILNAME" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vCompany" name="VENDORCOMPANYNAME" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vStreet" name="STREET" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vRecipientNumber" name="RECIPIENTGROUPID" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vIban" name="BANKNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vCity" name="CITY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vZipCode" name="ZIPCODE" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vVatNumber" name="VATNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vCountry" name="COUNTRY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vLock" name="LOCK" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+
                 </inputParameters> 
                 <outputParameters>
 					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
@@ -28,25 +41,6 @@
 					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                 </outputParameters> 
 			</function>
-            <function id='pedant2' name='VENDOR' description='VENDOR_DESC'>
-                <inputParameters>
-					<field id='api_key' name='API_KEY' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
-					<field id='internalNumber' name='INTNUMBER' worktable='yes' subtable='no' fixed='yes' datatype='varchar'/>
-					<field id='flag' name='FLAG' desc='FLAG_DESC' worktable='no' subtable='no' fixed='yes' datatype='varchar'/>
-                    <field id='note' name='NOTE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar'/>
-					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
-                </inputParameters> 
-                <outputParameters>
-					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
-                    <field id='invoiceID' name='INVOICEID' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-                    <field id='tempJSON' name='TEMPJSON' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-                    <field id='error' name='ERROR' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-                    <field id='errorMessage' name='ERRORMESSAGE' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-                    <field id='userData' name='USERDATA' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-					<list id='recipientDetails' name='RECIPIENTDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>					
-					<list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-                </outputParameters> 
             </function>
         </functions>
         <simulation>
