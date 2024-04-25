@@ -406,6 +406,26 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
     public function getUDL($udl, $elementID)
     {
+        if ($elementID == 'postVendor') {
+            return [
+                ['name' => '-', 'value' => ''],
+                ['name' => PROFILNAME, 'value' => '1'],
+                ['name' => INTERNALNUMBER, 'value' => '2'],
+                ['name' => RECIPIENTGROUPID, 'value' => '3'],
+                ['name' => VENDORCOMPANYNAME, 'value' => '4'],
+                ['name' => STREET, 'value' => '5'],
+                ['name' => CITY, 'value' => '6'],
+                ['name' => COUNTRY, 'value' => '7'],
+                ['name' => ZIPCODE, 'value' => '8'],
+                ['name' => CURRENCY, 'value' => '9'],
+                ['name' => KVK, 'value' => '10'],
+                ['name' => VAT, 'value' => '11'],
+                ['name' => TAXNUMBER, 'value' => '12'],
+                ['name' => BANKNUMBER, 'value' => '13'],
+                ['name' => LOCK , 'value' => '14']
+            ];
+        }
+
         if ($elementID == 'recipientDetails') {
             return [
                 ['name' => '-', 'value' => ''],
