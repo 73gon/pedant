@@ -12,17 +12,6 @@
 					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
                     <field id="vSqlQuery" name="SQLQUERY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
                     <list id="postVendor" name="POSTVENDOR" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
-                    <field id="vInternalNumber" name="INTERNALNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vProfileName" name="PROFILNAME" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vCompany" name="VENDORCOMPANYNAME" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vStreet" name="STREET" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vRecipientNumber" name="RECIPIENTGROUPID" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vIban" name="BANKNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vCity" name="CITY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vZipCode" name="ZIPCODE" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vVatNumber" name="VATNUMBER" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vCountry" name="COUNTRY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
-                    <field id="vLock" name="LOCK" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
                 </inputParameters> 
                 <outputParameters>
 					<field id='fileID' name='FILEID' worktable='yes' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
