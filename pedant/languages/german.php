@@ -103,5 +103,11 @@ define('INVOICEDETAILS', 'Rechnungsdaten');
 	define('RESOLVEDISSUES', 'Gelöste Probleme');
 	define('EDITOR', 'Bearbeiter');
 
+define('AUDITTRAILDETAILS', 'Aufzeichnugskontrollendetails');
+	define('USERNAME', 'Nutzername');
+	define('TYPE', 'Typ');
+	define('SUBTYPE', 'Untertyp');
+	define('COMMENT', 'Kommentar');
+
 
 	

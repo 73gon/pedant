@@ -112,7 +112,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' . $this->getSystemActivityVar('FILEID'),
+                CURLOPT_URL => 'https://api.demo.pedant.ai/external/invoices?fileId=' . $this->getSystemActivityVar('FILEID') .'&auditTrail=true',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -401,6 +401,18 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($attributes3 as $attribute) {
             $this->setTableValue($attribute['value'], $values3[$attribute['id']]);
         }
+
+        $attributes4 = $this->resolveOutputParameterListAttributes('auditTrailDetails');
+        $values4 = [
+            0,
+            $data["data"][0]["auditTrail"][0]["userName"],
+            $data["data"][0]["auditTrail"][0]["type"],
+            $data["data"][0]["auditTrail"][0]["subType"],
+            $data["data"][0]["auditTrail"][0]["comment"]
+        ];
+        foreach ($attributes4 as $attribute) {
+            $this->setTableValue($attribute['value'], $values4[$attribute['id']]);
+        }
     }
 
 
@@ -492,6 +504,16 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => CURRENCY, 'value' => '29'],
                 ['name' => RESOLVEDISSUES, 'value' => '30'],
                 ['name' => EDITOR, 'value' => '31']
+            ];
+        }
+
+        if ($elementID == 'auditTrailDetails') {
+            return [
+                ['name' => '-', 'value' => ''],
+                ['name' => USERNAME, 'value' => '1'],
+                ['name' => TYPE, 'value' => '2'],
+                ['name' => SUBTYPE, 'value' => '3'],
+                ['name' => COMMENT, 'value' => '4']
             ];
         }
         return null;

@@ -101,4 +101,9 @@ define('INVOICEDETAILS', 'Invoicedetails');
 	define('CURRENCY', 'Currency');
 	define('RESOLVEDISSUES', 'Resolved Issues');
 	define('EDITOR', 'Editor');
-	
+
+define('AUDITTRAILDETAILS', 'Audit Trail Details');
+	define('USERNAME', 'Username');
+	define('TYPE', 'Type');
+	define('SUBTYPE', 'Subtype');
+	define('COMMENT', 'Comment');	
