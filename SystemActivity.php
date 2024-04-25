@@ -244,6 +244,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
     protected function postVendorDetails()
     {
+        //TODO CHANGE FUNCTION
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
