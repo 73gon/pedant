@@ -262,7 +262,12 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $JobDB = $this->getJobDB();
 
         $temp = "SELECT ";
-        $lastKey = array_key_last($list);
+        $lastKey = null;
+        foreach ($list as $listindex => $listvalue) {
+            if (!empty($listvalue)) {
+            $lastKey = $listindex;
+            }
+        }
         foreach ($list as $listindex => $listvalue) {
             if (!empty($listvalue)) {
                 if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
