@@ -282,7 +282,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
         }
 
-        $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
+        $temp .= " FROM " . $table . " GROUP BY internalNumber";
 
         $result = $JobDB->query($temp);
 
@@ -294,7 +294,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             foreach ($fields as $index => $field) {
                 if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$fields[$index]]) && !empty($row[$fields[$index]])) {
-                    $data[$field] = explode(',', $row[$fields[$index]]);
+                    $data[$field] = $row[$fields[$index]];
                 } elseif (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans'])) {
                     $data[$field] = '';
                 } else {
@@ -304,8 +304,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             $payloads[] = $data;
         }
-            
-            //$payloads = json_encode($payload);
 
             $csvData = [];
             $csvData[] = $fields;
@@ -313,17 +311,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             foreach ($payloads as $payload) {
                 $rowData = [];
                 foreach ($fields as $field) {
-                    $rowData[] = isset($payload[$field]) ? $payload[$field] : ''; // Check if the field exists in the payload, otherwise use an empty string
+                    $rowData[] = isset($payload[$field]) ? $payload[$field] : '';
                 }
-                $csvData[] = $rowData; // Add the row data to the CSV data array
+                $csvData[] = $rowData;
             }
 
-            $csvFilePath = './systemactivities/pedant/test.csv'; // Set the file path to the current directory with the file name 'file.csv'
+            $csvFilePath = './systemactivities/pedant/test.csv';
 
             $csvFile = fopen($csvFilePath, 'w');
 
             foreach ($csvData as $row) {
-                fputcsv($csvFile, $row); // Write each row to the CSV file
+                fputcsv($csvFile, $row);
             }
 
             fclose($csvFile);
