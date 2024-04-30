@@ -313,7 +313,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 $csvData[] = $rowData; // Add the row data to the CSV data array
             }
 
-            $csvFilePath = './malikkk.csv'; // Set the file path to the current directory with the file name 'file.csv'
+            $csvFilePath = './systemactivities/pedant/test.csv'; // Set the file path to the current directory with the file name 'file.csv'
 
             $csvFile = fopen($csvFilePath, 'w');
 
