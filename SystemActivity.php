@@ -284,8 +284,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
 
-        error_log($temp);
-
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
@@ -302,9 +300,30 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 }
             }
             
-            error_log($temp);
             $payload = json_encode($data);
-            error_log(print_r($payload, true));
+
+            $csvData = [];
+            $csvData[] = $fields; // Add the field names as the first row
+
+            foreach ($data as $payload) {
+                $rowData = [];
+                foreach ($fields as $field) {
+                    $rowData[] = isset($payload[$field]) ? $payload[$field] : ''; // Check if the field exists in the payload, otherwise use an empty string
+                }
+                $csvData[] = $rowData; // Add the row data to the CSV data array
+            }
+
+            $csvFile = fopen('/path/to/your/csv/file.csv', 'w'); // Replace '/path/to/your/csv/file.csv' with the actual file path
+
+            foreach ($csvData as $row) {
+                fputcsv($csvFile, $row); // Write each row to the CSV file
+            }
+
+            fclose($csvFile);
+
+            $csvFilePath = '/test_malik.csv'; // Replace '/path/to/your/csv/file.csv' with the actual file path
+            $logMessage = 'CSV file created: ' . $csvFilePath;
+            error_log($logMessage);
             /*
             $curl = curl_init();
             curl_setopt_array($curl, array(
