@@ -266,21 +266,23 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $temp = "SELECT ";
         $lastKey = array_key_last($list);
         foreach ($list as $listindex => $listvalue) {
-            if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
-                $temp .= "GROUP_CONCAT(" . $listvalue . " SEPARATOR ',') AS " . $fields[$listindex - 1];
-            } else {
-                $temp .= $listvalue . " AS " . $fields[$listindex - 1];
-            }
+            if (!empty($listvalue)) {
+                if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
+                    $temp .= "GROUP_CONCAT(" . $listvalue . " SEPARATOR ',') AS " . $fields[$listindex - 1];
+                } else {
+                    $temp .= $listvalue . " AS " . $fields[$listindex - 1];
+                }
 
-            if ($listindex !== $lastKey) {
-                $temp .= ", ";
+                if ($listindex !== $lastKey) {
+                    $temp .= ", ";
+                }
             }
         }
 
         $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
 
         error_log($temp);
-        
+
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
