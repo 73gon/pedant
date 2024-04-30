@@ -286,6 +286,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $result = $JobDB->query($temp);
 
+        $payload = [];
+
         while ($row = $JobDB->fetchRow($result)) {
 
             $data = [];
@@ -299,16 +301,22 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                     $data[$field] = isset($row[$fields[$index]]) && !empty($row[$fields[$index]]) ? $row[$fields[$index]] : '';
                 }
             }
+
+            $payload[] = $data;
+        }
             
             $payload = json_encode($data);
+
+            error_log(print_r($payload, true));
 
             $csvData = [];
             $csvData[] = $fields; // Add the field names as the first row
 
+            
             foreach ($data as $payload) {
                 $rowData = [];
                 foreach ($fields as $field) {
-                    $rowData[] = isset($payload[$field]) ? $payload[$field] : 'NULL'; // Check if the field exists in the payload, otherwise use an empty string
+                    $rowData[] = isset($payload[$field]) ? $payload[$field] : ''; // Check if the field exists in the payload, otherwise use an empty string
                 }
                 $csvData[] = $rowData; // Add the row data to the CSV data array
             }
@@ -348,7 +356,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             curl_close($curl);
             */
-        }
     }
 
 
