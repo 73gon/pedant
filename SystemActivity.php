@@ -135,7 +135,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 0) {
             throw new JobRouterException('pull errorcode: ' . $httpcode);
         }
-        if ($httpcode == 503 || $httpcode == 502 || $httpcode == 0) {
+        if ($httpcode == 503 || $httpcode == 502 || $httpcode == 0 || $httpcode == 500) {
             $this->setResubmission(10, 'm');
             $wartezeit = "10M";
         }
@@ -296,7 +296,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$fields[$index]]) && !empty($row[$fields[$index]])) {
                     $data[$field] = explode(',', $row[$fields[$index]]);
                 } elseif (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans'])) {
-                    $data[$field] = [];
+                    $data[$field] = '';
                 } else {
                     $data[$field] = isset($row[$fields[$index]]) && !empty($row[$fields[$index]]) ? $row[$fields[$index]] : '';
                 }

@@ -1,0 +1,4 @@
+profileName,internalNumber,recipientGroupId,name,street,city,country,zipCode,currency,kvk,vatNumbers,taxNumbers,ibans
+"Swietelsky AG",1000000,,"Swietelsky AG",,,,,,,Array,Array,Array
+"Habau Hoch- und Tiefbau-",1000041,,"Habau Hoch- und Tiefbau-",,,,,,,Array,Array,Array
+"Swietelsky AG",1000100,,"Swietelsky AG",,,,,,,Array,Array,Array
