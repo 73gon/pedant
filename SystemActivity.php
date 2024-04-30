@@ -313,7 +313,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 $csvData[] = $rowData; // Add the row data to the CSV data array
             }
 
-            $csvFile = fopen('/path/to/your/csv/file.csv', 'w'); // Replace '/path/to/your/csv/file.csv' with the actual file path
+            $csvFilePath = './malikkk.csv'; // Set the file path to the current directory with the file name 'file.csv'
+
+            $csvFile = fopen($csvFilePath, 'w'); // Open the file in write mode
 
             foreach ($csvData as $row) {
                 fputcsv($csvFile, $row); // Write each row to the CSV file
@@ -321,7 +323,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
             fclose($csvFile);
 
-            $csvFilePath = 'C:\test_malik.csv'; // Replace '/path/to/your/csv/file.csv' with the actual file path
             $logMessage = 'CSV file created: ' . $csvFilePath;
             error_log($logMessage);
             /*
