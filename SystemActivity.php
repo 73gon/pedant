@@ -302,19 +302,15 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 }
             }
 
-            error_log(print_r($data, true));
-            $payload[] = $data;
+            $payloads[] = $data;
         }
             
-            $payload = json_encode($payload);
-
-            error_log(print_r($payload, true));
+            //$payloads = json_encode($payload);
 
             $csvData = [];
-            $csvData[] = $fields; // Add the field names as the first row
-
+            $csvData[] = $fields;
             
-            foreach ($data as $payload) {
+            foreach ($payloads as $payload) {
                 $rowData = [];
                 foreach ($fields as $field) {
                     $rowData[] = isset($payload[$field]) ? $payload[$field] : ''; // Check if the field exists in the payload, otherwise use an empty string
@@ -342,7 +338,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_POSTFIELDS => $payloads,
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
