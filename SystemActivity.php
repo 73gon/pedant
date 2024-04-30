@@ -308,23 +308,20 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             foreach ($data as $payload) {
                 $rowData = [];
                 foreach ($fields as $field) {
-                    $rowData[] = isset($payload[$field]) ? $payload[$field] : ''; // Check if the field exists in the payload, otherwise use an empty string
+                    $rowData[] = isset($payload[$field]) ? $payload[$field] : 'NULL'; // Check if the field exists in the payload, otherwise use an empty string
                 }
                 $csvData[] = $rowData; // Add the row data to the CSV data array
             }
 
             $csvFilePath = './malikkk.csv'; // Set the file path to the current directory with the file name 'file.csv'
 
-            $csvFile = fopen($csvFilePath, 'w'); // Open the file in write mode
+            $csvFile = fopen($csvFilePath, 'w');
 
             foreach ($csvData as $row) {
                 fputcsv($csvFile, $row); // Write each row to the CSV file
             }
 
             fclose($csvFile);
-
-            $logMessage = 'CSV file created: ' . $csvFilePath;
-            error_log($logMessage);
             /*
             $curl = curl_init();
             curl_setopt_array($curl, array(
