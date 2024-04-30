@@ -245,7 +245,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
     protected function postVendorDetails()
     {
-        $table = $this->resolveInputParameter('vSqlQuery');
+        $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
@@ -254,8 +254,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $list[$listindex] = $listvalue;
         }
         ksort($list);
-
-        error_log(print_r($list, true));
 
         if (empty($table)) {
             return;

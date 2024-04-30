@@ -10,7 +10,7 @@
 					<field id='flag' name='FLAG' desc='FLAG_DESC' worktable='no' subtable='no' fixed='yes' datatype='varchar'/>
                     <field id='note' name='NOTE' worktable='yes' subtable='yes' fixed='yes' datatype='varchar'/>
 					<field id='incident' name='INCIDENT' worktable='no' subtable='no' fixed='yes' datatype='varchar' required='yes'/>
-                    <field id="vSqlQuery" name="SQLQUERY" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
+                    <field id="vendorTable" name="VENDORTABLE" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no"/>
                     <list id="postVendor" name="POSTVENDOR" worktable="yes" subtable="no" fixed="yes" datatype="varchar" required="no" udl="yes"/>
                 </inputParameters> 
                 <outputParameters>
