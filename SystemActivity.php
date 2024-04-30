@@ -306,7 +306,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $payload[] = $data;
         }
             
-            $payload = json_encode($data);
+            $payload = json_encode($payload);
 
             error_log(print_r($payload, true));
 
