@@ -94,6 +94,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     }
     protected function checkFile()
     {
+        $this->postVendorDetails();
 
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
@@ -248,11 +249,15 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $listfields = $this->resolveInputParameterListValues('postVendor');
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
+        error_log(print_r($listfields, true));
+        
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
             $list[$listindex] = $listvalue;
         }
         ksort($list);
+
+        error_log(print_r($list, true));
 
         if (empty($table)) {
             return;
