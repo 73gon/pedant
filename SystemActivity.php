@@ -302,6 +302,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 }
             }
 
+            error_log(print_r($data, true));
             $payload[] = $data;
         }
             
