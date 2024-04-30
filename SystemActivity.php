@@ -244,7 +244,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
     protected function postVendorDetails()
     {
-        //TODO CHANGE FUNCTION TEST
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
@@ -294,6 +293,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
 
             $payload = json_encode($data);
+            /*
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors",
@@ -318,6 +318,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
 
             curl_close($curl);
+            */
         }
     }
 
