@@ -249,8 +249,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $listfields = $this->resolveInputParameterListValues('postVendor');
         $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
-        error_log(print_r($listfields, true));
-        
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
             $list[$listindex] = $listvalue;
@@ -281,6 +279,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
 
+        error_log($temp);
+        
         $result = $JobDB->query($temp);
 
         while ($row = $JobDB->fetchRow($result)) {
