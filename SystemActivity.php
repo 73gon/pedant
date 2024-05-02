@@ -250,7 +250,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     {
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
-        $fields = ['ProfileName', 'InternalNumber', 'RecipientGroupId', 'Name', 'Street', 'City', 'Country', 'ZipCode', 'Currency', 'KVK', 'VatNumbers', 'TaxNumbers', 'Iban'];
+        $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
@@ -341,21 +341,19 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
                     'file' => new CURLFILE($csvFilePath),
-                    'csvHeaders' => array(
-                        'ProfileName',
-                        'InternalNumber',
-                        'RecipientNumber',
-                        'Name',
-                        'Street',
-                        'City',
-                        'Country',
-                        'ZipCode',
-                        'Currency',
-                        'KVK',
-                        'VatNumber',
-                        'TaxNumber',
-                        'Iban'
-                    )
+                    'csvHeaders' => 'ProfileName',
+                    'csvHeaders' => 'InternalNumber',
+                    'csvHeaders' => 'RecipientNumber',
+                    'csvHeaders' => 'Name',
+                    'csvHeaders' => 'Street',
+                    'csvHeaders' => 'City',
+                    'csvHeaders' => 'Country',
+                    'csvHeaders' => 'ZipCode',
+                    'csvHeaders' => 'Currency',
+                    'csvHeaders' => 'KVK',
+                    'csvHeaders' => 'VatNumber',
+                    'csvHeaders' => 'TaxNumber',
+                    'csvHeaders' => 'Iban'
                 ),
                 CURLOPT_HTTPHEADER => array(
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
