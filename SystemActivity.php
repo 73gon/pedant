@@ -282,7 +282,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
         }
 
-        $temp .= " FROM " . $table . " GROUP BY internalNumber";
+        $temp .= " FROM " . $table . " GROUP BY internalNumber LIMIT 3";
 
         $result = $JobDB->query($temp);
 
