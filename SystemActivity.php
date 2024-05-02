@@ -132,7 +132,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 0) {
+        if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 500 && $httpcode != 0) {
             throw new JobRouterException('pull errorcode: ' . $httpcode);
         }
         if ($httpcode == 503 || $httpcode == 502 || $httpcode == 0 || $httpcode == 500) {
