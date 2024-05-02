@@ -96,9 +96,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     protected function checkFile()
     {
         if (!empty($this->resolveInputParameter('vendorTable'))) {
-            $this->postVendorDetails();
+            //$this->postVendorDetails();
         }
-
+        error_log("test " .$this->resolveInputParameter('vendorTable'));
+        
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
