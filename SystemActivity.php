@@ -308,9 +308,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $payloads[] = $data;
         }
 
+            <?php
             $csvData = [];
             $csvData[] = $fields;
-            
+
             foreach ($payloads as $payload) {
                 $rowData = [];
                 foreach ($fields as $field) {
@@ -328,8 +329,31 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             }
 
             fclose($csvFile);
-            
+
             $curl = curl_init();
+
+            $csvHeaders = array(
+                'ProfileName',
+                'InternalNumber',
+                'RecipientNumber',
+                'Name',
+                'Street',
+                'City',
+                'Country',
+                'ZipCode',
+                'Currency',
+                'KVK',
+                'VatNumber',
+                'TaxNumber',
+                'Iban'
+            );
+
+            $postFields = array('file' => new CURLFile($csvFilePath));
+
+            foreach ($csvHeaders as $header) {
+                $postFields['csvHeaders'] = $header;
+            }
+
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors/import",
                 CURLOPT_RETURNTRANSFER => true,
@@ -339,22 +363,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'file' => new CURLFILE($csvFilePath),
-                    'csvHeaders' => 'ProfileName',
-                    'csvHeaders' => 'InternalNumber',
-                    'csvHeaders' => 'RecipientNumber',
-                    'csvHeaders' => 'Name',
-                    'csvHeaders' => 'Street',
-                    'csvHeaders' => 'City',
-                    'csvHeaders' => 'Country',
-                    'csvHeaders' => 'ZipCode',
-                    'csvHeaders' => 'Currency',
-                    'csvHeaders' => 'KVK',
-                    'csvHeaders' => 'VatNumber',
-                    'csvHeaders' => 'TaxNumber',
-                    'csvHeaders' => 'Iban'
-                ),
+                CURLOPT_POSTFIELDS => $postFields,
                 CURLOPT_HTTPHEADER => array(
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
                 ),
@@ -363,12 +372,13 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             ));
 
             $response = curl_exec($curl);
-            
+
             error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
 
             curl_close($curl);
 
             unlink($csvFilePath);
+            ?>
 
     }
 
