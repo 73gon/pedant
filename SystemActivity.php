@@ -99,7 +99,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             //$this->postVendorDetails();
         }
         error_log("test " .$this->resolveInputParameter('vendorTable'));
-        
+
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
@@ -342,22 +342,23 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
                     'file' => new CURLFILE($csvFilePath),
-                    'csvHeaders' => 'profileName',
-                    'csvHeaders' => 'internalNumber',
-                    'csvHeaders' => 'recipientNumber',
-                    'csvHeaders' => 'Name',
-                    'csvHeaders' => 'Street',
-                    'csvHeaders' => 'City',
-                    'csvHeaders' => 'Country',
-                    'csvHeaders' => 'ZipCode',
-                    'csvHeaders' => 'Currency',
-                    'csvHeaders' => 'KVK',
-                    'csvHeaders' => 'VatNumber',
-                    'csvHeaders' => 'TaxNumber',
-                    'csvHeaders' => 'Iban'
+                    'csvHeaders' => array(
+                        'profileName',
+                        'internalNumber',
+                        'recipientNumber',
+                        'Name',
+                        'Street',
+                        'City',
+                        'Country',
+                        'ZipCode',
+                        'Currency',
+                        'KVK',
+                        'VatNumber',
+                        'TaxNumber',
+                        'Iban'
+                    )
                 ),
                 CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
                 ),
                 CURLOPT_SSL_VERIFYHOST => 0,
