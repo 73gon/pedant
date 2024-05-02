@@ -98,7 +98,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if (!empty($this->resolveInputParameter('vendorTable'))) {
             $this->postVendorDetails();
         }
-        
+
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
@@ -442,8 +442,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data["data"][0]["status"],
             $data["data"][0]["rejectReason"],
             $data["data"][0]["currency"],
-            $data["data"][0]["resolvedIssuesCount"],
-            $data["data"][0]["auditTrail"][0]["userName"]
+            $data["data"][0]["resolvedIssuesCount"]
         ];
 
         for ($i = 0; $i < count($array); $i++) {
@@ -458,10 +457,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $attributes4 = $this->resolveOutputParameterListAttributes('auditTrailDetails');
         $values4 = [
             0,
-            $data["data"][0]["auditTrail"][0]["userName"],
-            $data["data"][0]["auditTrail"][0]["type"],
-            $data["data"][0]["auditTrail"][0]["subType"],
-            $data["data"][0]["auditTrail"][0]["comment"]
+            $data["data"][0]["auditTrail"][1]["userName"],
+            $data["data"][0]["auditTrail"][1]["type"],
+            $data["data"][0]["auditTrail"][1]["subType"],
+            $data["data"][0]["auditTrail"][1]["comment"]
         ];
         foreach ($attributes4 as $attribute) {
             $this->setTableValue($attribute['value'], $values4[$attribute['id']]);
@@ -555,8 +554,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => STATUS, 'value' => '27'],
                 ['name' => REJECTREASON, 'value' => '28'],
                 ['name' => CURRENCY, 'value' => '29'],
-                ['name' => RESOLVEDISSUES, 'value' => '30'],
-                ['name' => EDITOR, 'value' => '31']
+                ['name' => RESOLVEDISSUES, 'value' => '30']
             ];
         }
 
