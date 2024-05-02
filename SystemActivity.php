@@ -350,7 +350,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $postFields = array('file' => new CURLFile($csvFilePath));
 
             foreach ($csvHeaders as $header) {
-                $postFields[] = array('name' => 'csvHeaders', 'contents' => $header);
+                $postFields["csvHeaders[$header]"] = $header;
             }
 
             curl_setopt_array($curl, array(
