@@ -308,7 +308,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $payloads[] = $data;
         }
 
-            <?php
             $csvData = [];
             $csvData[] = $fields;
 
@@ -351,7 +350,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $postFields = array('file' => new CURLFile($csvFilePath));
 
             foreach ($csvHeaders as $header) {
-                $postFields['csvHeaders'] = $header;
+                $postFields[] = array('name' => 'csvHeaders', 'contents' => $header);
             }
 
             curl_setopt_array($curl, array(
@@ -378,7 +377,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             curl_close($curl);
 
             unlink($csvFilePath);
-            ?>
 
     }
 
