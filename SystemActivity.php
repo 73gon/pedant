@@ -98,7 +98,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if (!empty($this->resolveInputParameter('vendorTable'))) {
             $this->postVendorDetails();
         }
-        error_log("test " .$this->resolveInputParameter('vendorTable'));
         
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
@@ -251,7 +250,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     {
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
-        $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
+        $fields = ['ProfileName', 'InternalNumber', 'RecipientGroupId', 'Name', 'Street', 'City', 'Country', 'ZipCode', 'Currency', 'KVK', 'VatNumbers', 'TaxNumbers', 'Iban'];
 
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
