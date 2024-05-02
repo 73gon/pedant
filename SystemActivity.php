@@ -96,7 +96,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     protected function checkFile()
     {
         if (!empty($this->resolveInputParameter('vendorTable'))) {
-            //$this->postVendorDetails();
+            $this->postVendorDetails();
         }
         error_log("test " .$this->resolveInputParameter('vendorTable'));
         
@@ -342,19 +342,21 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
                     'file' => new CURLFILE($csvFilePath),
-                    'csvHeaders' => 'profileName',
-                    'csvHeaders' => 'internalNumber',
-                    'csvHeaders' => 'recipientNumber',
-                    'csvHeaders' => 'Name',
-                    'csvHeaders' => 'Street',
-                    'csvHeaders' => 'City',
-                    'csvHeaders' => 'Country',
-                    'csvHeaders' => 'ZipCode',
-                    'csvHeaders' => 'Currency',
-                    'csvHeaders' => 'KVK',
-                    'csvHeaders' => 'VatNumber',
-                    'csvHeaders' => 'TaxNumber',
-                    'csvHeaders' => 'Iban'
+                    'csvHeaders' => array(
+                        'ProfileName',
+                        'InternalNumber',
+                        'RecipientNumber',
+                        'Name',
+                        'Street',
+                        'City',
+                        'Country',
+                        'ZipCode',
+                        'Currency',
+                        'KVK',
+                        'VatNumber',
+                        'TaxNumber',
+                        'Iban'
+                    )
                 ),
                 CURLOPT_HTTPHEADER => array(
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
