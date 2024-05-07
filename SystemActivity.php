@@ -137,13 +137,14 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $counterQuery = "SELECT counter FROM pedantSystemActivity WHERE fileid = '" . $this->getSystemActivityVar('FILEID') . "'";
         $result = $jobDB->query($counterQuery);
         $row = $jobDB->fetchAll($result);
-        if ($row[0]["counter"] >= 10) {
+        if ($row[0]["counter"] > 10) {
             if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 500 && $httpcode != 0) {
                 throw new JobRouterException('Error occurred during file extraction. HTTP Error Code: ' . $httpcode);
             }
         }else{
             $this->increaseCounter($this->getSystemActivityVar('FILEID'));
             $this->setResubmission(10, 'm');
+            error_log($httpcode);
         }
 
 
