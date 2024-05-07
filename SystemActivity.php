@@ -98,8 +98,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if (!empty($this->resolveInputParameter('vendorTable'))) {
             error_log("Vendor Table is not empty");
             $this->postVendorDetails();
+        }else{
+            error_log("Vendor Table is empty");
         }
-        error_log("Vendor Table is empty");
         
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
@@ -144,7 +145,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         }else{
             $this->increaseCounter($this->getSystemActivityVar('FILEID'));
             $this->setResubmission(10, 'm');
-            error_log($httpcode);
         }
 
 
