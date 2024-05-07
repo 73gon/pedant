@@ -270,7 +270,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     {
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
-        $fields = ['profileName', 'internalNumber', 'recipientGroupId', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
+        $fields = ['profileName', 'internalNumber', 'recipientNumber', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
 
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
@@ -362,8 +362,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 CURLOPT_POSTFIELDS => array(
                     'file' => new CURLFILE($csvFilePath),
                     'csvHeaders' => array(
-                        'ProfileName',
-                        'InternalNumber',
+                        'profileName',
+                        'internalNumber',
                         'RecipientNumber',
                         'Name',
                         'Street',
