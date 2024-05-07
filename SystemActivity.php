@@ -376,22 +376,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                         'TaxNumber',
                         'IBAN'
                     )
-
-                    'csvHeaders' => 'ProfileName',
-                    'csvHeaders' => 'InternalNumber',
-                    'csvHeaders' => 'RecipientNumber',
-                    'csvHeaders' => 'Name',
-                    'csvHeaders' => 'Street',
-                    'csvHeaders' => 'City',
-                    'csvHeaders' => 'Country',
-                    'csvHeaders' => 'ZipCode',
-                    'csvHeaders' => 'Currency',
-                    'csvHeaders' => 'KVK',
-                    'csvHeaders' => 'VatNumber',
-                    'csvHeaders' => 'TaxNumber',
-                    'csvHeaders' => 'IBAN'
-
-
                 ),
                 CURLOPT_HTTPHEADER => array(
                     'X-API-KEY: ' . $this->resolveInputParameter('api_key')
