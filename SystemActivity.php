@@ -96,10 +96,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     protected function checkFile()
     {
         if (!empty($this->resolveInputParameter('vendorTable'))) {
-            error_log("Vendor Table is not empty");
             $this->postVendorDetails();
-        }else{
-            error_log("Vendor Table is empty");
         }
         
         $jobDB = $this->getJobDB();
