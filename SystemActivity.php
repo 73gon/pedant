@@ -51,7 +51,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         } else if ($this->resolveInputParameter('flag') == 'force_skip') {
             $action = 'force_skip';
         } else {
-            throw new Exception(FLAG . ' input is incorrect');
+            throw new Exception('Invalid input parameter value for FLAG: ' . $this->resolveInputParameter('flag'));
         }
         curl_setopt_array(
             $curl,
@@ -81,12 +81,12 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($httpcode != 201) {
-            throw new JobRouterException('post errorcode: ' . $httpcode);
+            throw new JobRouterException('Error occurred during file upload. HTTP Error Code: ' . $httpcode);
         }
         curl_close($curl);
         $jobDB = $this->getJobDB();
-        $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
-                   VALUES(" . $this->resolveInputParameter('incident') . ", " . "'" . $data[0]['fileId']  . "'" . ")";
+        $insert = "INSERT INTO pedantSystemActivity(incident, fileid, counter)
+                   VALUES(" .$this->resolveInputParameter('incident') .", " ."'" .$data[0]['fileId']  ."'" .", 0)";
         $jobDB->exec($insert);
         $this->storeOutputParameter('fileID', $data[0]["fileId"]);
         $this->storeOutputParameter('invoiceID', $data[0]["invoiceId"]);
@@ -96,17 +96,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     protected function checkFile()
     {
         if (!empty($this->resolveInputParameter('vendorTable'))) {
+            error_log("Vendor Table is not empty");
             $this->postVendorDetails();
         }
+        error_log("Vendor Table is empty");
         
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 20) {
             $this->setResubmission(60, 's');
-            $wartezeit = "600S";
         } else if (date("H") < 6) {
             $time = 6 - date("H");
             $this->setResubmission($time, 'h');
-            $wartezeit = "12H";
         } else {
             $time = 24 - date("H") + 6;
             $this->setResubmission($time, 'h');
@@ -134,13 +134,21 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
 
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 500 && $httpcode != 0) {
-            throw new JobRouterException('pull errorcode: ' . $httpcode);
+        $counterQuery = "SELECT counter FROM pedantSystemActivity WHERE fileid = '" . $this->getSystemActivityVar('FILEID') . "'";
+        $result = $jobDB->query($counterQuery);
+        $row = $jobDB->fetchAll($result);
+        if ($row[0]["counter"] >= 10) {
+            if ($httpcode != 200 && $httpcode != 404 && $httpcode != 503 && $httpcode != 502 && $httpcode != 500 && $httpcode != 0) {
+                throw new JobRouterException('Error occurred during file extraction. HTTP Error Code: ' . $httpcode);
+            }
+        }else{
+            $this->increaseCounter($this->getSystemActivityVar('FILEID'));
+            $this->setResubmission(10, 'm');
         }
+
+
         if ($httpcode == 503 || $httpcode == 502 || $httpcode == 0 || $httpcode == 500) {
             $this->setResubmission(10, 'm');
-            $wartezeit = "10M";
         }
         curl_close($curl);
 
@@ -158,8 +166,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         if ($row[0]["fileid"] != $file && $data["data"][0]["status"] == "uploaded") {
             $this->storeOutputParameter('tempJSON', json_encode($data));
-            $insert = "INSERT INTO pedantSystemActivity(incident, fileid)
-                       VALUES(-" . $this->resolveInputParameter('incident') . ", " . "'" . $data["data"][0]["fileId"]  . "'" . ")";
+            $insert = "INSERT INTO pedantSystemActivity(incident, fileid, counter)
+                       VALUES(-" . $this->resolveInputParameter('incident') . ", " . "'" . $data["data"][0]["fileId"]  . "'" . ", 0)";
             $jobDB->exec($insert);
         }
 
@@ -224,8 +232,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                WHERE incident = '" . $this->resolveInputParameter('incident') . "'";
         $table = "CREATE TABLE pedantSystemActivity (
                   incident INT NOT NULL PRIMARY KEY,
-                  fileid NVARCHAR(50) NOT NULL)";
-
+                  fileid NVARCHAR(50) NOT NULL),
+                  counter INT NOT NULL DEFAULT 0";
         if ($var == 1) {
             $result = $JobDB->query($id);
             $count = 0;
@@ -244,6 +252,20 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $JobDB->exec($table);
             return false;
         }
+    }
+
+    protected function increaseCounter($fileid){
+        $JobDB = $this->getJobDB();
+        $counter = "SELECT counter
+                    FROM pedantSystemActivity
+                    WHERE fileid = '" . $fileid . "'";
+        $result = $JobDB->query($counter);
+        $row = $JobDB->fetchAll($result);
+        $count = $row[0]["counter"] + 1;
+        $update = "UPDATE pedantSystemActivity
+                   SET counter = " . $count . "
+                   WHERE fileid = '" . $fileid . "'";
+        $JobDB->exec($update);
     }
 
     protected function postVendorDetails()
