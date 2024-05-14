@@ -266,7 +266,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $JobDB->exec($update);
     }
 
-    
     protected function postVendorDetails()
     {
         $table = $this->resolveInputParameter('vendorTable');
