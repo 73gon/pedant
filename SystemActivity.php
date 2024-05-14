@@ -24,7 +24,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $this->checkFILEID();
         date_default_timezone_set("Europe/Berlin");
         if ($this->isFirstExecution()) {
-            $this->setResubmission(1, 'm');
+            $this->setResubmission(10, 'm');
             $this->uploadFile();
         }
 
@@ -45,7 +45,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $action = 'normal';
         } else if ($this->resolveInputParameter('flag') == 'check_extraction') {
             $action = 'check_extraction';
-            $this->setResubmission(1, 'm');
+            $this->setResubmission(10, 'm');
         } else if ($this->resolveInputParameter('flag') == 'skip_review') {
             $action = 'skip_review';
         } else if ($this->resolveInputParameter('flag') == 'force_skip') {
@@ -100,14 +100,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         }
         
         $jobDB = $this->getJobDB();
-        if (date("H") >= 6 && date("H") <= 20) {
-            $this->setResubmission(60, 's');
-        } else if (date("H") < 6) {
-            $time = 6 - date("H");
-            $this->setResubmission($time, 'h');
+        if (date("H") >= 6 && date("H") <= 24) {
+            $this->setResubmission(10, 'm');
         } else {
-            $time = 24 - date("H") + 6;
-            $this->setResubmission($time, 'h');
+            $this->setResubmission(60, 'm');
         }
 
         $curl = curl_init();
