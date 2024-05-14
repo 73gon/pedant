@@ -288,6 +288,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $lastKey = $listindex;
             }
         }
+        
         foreach ($list as $listindex => $listvalue) {
             if (!empty($listvalue)) {
                 if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
@@ -325,69 +326,69 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $payloads[] = $data;
         }
 
-            $csvData = [];
-            $csvData[] = $fields;
-            
-            foreach ($payloads as $payload) {
-                $rowData = [];
-                foreach ($fields as $field) {
-                    $rowData[] = isset($payload[$field]) ? $payload[$field] : '';
-                }
-                $csvData[] = $rowData;
+        $csvData = [];
+        $csvData[] = $fields;
+        
+        foreach ($payloads as $payload) {
+            $rowData = [];
+            foreach ($fields as $field) {
+                $rowData[] = isset($payload[$field]) ? $payload[$field] : '';
             }
+            $csvData[] = $rowData;
+        }
 
-            $csvFilePath = './systemactivities/pedant/test.csv';
+        $csvFilePath = './systemactivities/pedant/test.csv';
 
-            $csvFile = fopen($csvFilePath, 'w');
+        $csvFile = fopen($csvFilePath, 'w');
 
-            foreach ($csvData as $row) {
-                fputcsv($csvFile, $row);
-            }
+        foreach ($csvData as $row) {
+            fputcsv($csvFile, $row);
+        }
 
-            fclose($csvFile);
+        fclose($csvFile);
             
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors/import",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'file' => new CURLFILE($csvFilePath),
-                    'csvHeaders' => array(
-                        'ProfileName',
-                        'InternalNumber',
-                        'RecipientNumber',
-                        'Name',
-                        'Street',
-                        'City',
-                        'Country',
-                        'ZipCode',
-                        'Currency',
-                        'KVK',
-                        'VatNumber',
-                        'TaxNumber',
-                        'IBAN'
-                    )
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    'X-API-KEY: ' . $this->resolveInputParameter('api_key')
-                ),
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0
-            ));
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors/import",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'file' => new CURLFILE($csvFilePath),
+                'csvHeaders' => array(
+                    'ProfileName',
+                    'InternalNumber',
+                    'RecipientNumber',
+                    'Name',
+                    'Street',
+                    'City',
+                    'Country',
+                    'ZipCode',
+                    'Currency',
+                    'KVK',
+                    'VatNumber',
+                    'TaxNumber',
+                    'IBAN'
+                )
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'X-API-KEY: ' . $this->resolveInputParameter('api_key')
+            ),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
 
-            $response = curl_exec($curl);
+        $response = curl_exec($curl);
             
-            error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
+        error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
 
-            curl_close($curl);
+        curl_close($curl);
 
-            unlink($csvFilePath);
+        unlink($csvFilePath);
 
     }
 
