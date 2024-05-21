@@ -385,7 +385,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $response = curl_exec($curl);
             
-        error_log(print_r($response ." ---- " .curl_getinfo($curl), true));
+        error_log(print_r($response, true));
+
+        error_log(print_r(curl_getinfo($curl), true));
 
         curl_close($curl);
 
