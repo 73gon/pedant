@@ -418,17 +418,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             'csvHeaders' => 'Iban'),
         CURLOPT_HTTPHEADER => array(
             'X-API-KEY: ' .$this->resolveInputParameter('api_key')
-        )
+        ),
+        CURLOPT_SSL_VERIFYPEER => 0
         ));
 
         $response = curl_exec($curl);
 
         error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
-
         error_log(curl_error($curl));
+
+
         curl_close($curl);
-
-
         unlink($csvFilePath);
 
     }
