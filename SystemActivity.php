@@ -379,7 +379,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 'X-API-KEY: ' . $this->resolveInputParameter('api_key')
             ),
             CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLINFO_HEADER_OUT => true
         ));
 
         $response = curl_exec($curl);
