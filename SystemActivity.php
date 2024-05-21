@@ -401,7 +401,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array('file'=> new CURLFILE($csvFilePath),
+        CURLOPT_POSTFIELDS => array(
+            'file'=> new CURLFILE($csvFilePath),
             'csvHeaders' => 'profileName',
             'csvHeaders' => 'internalNumber',
             'csvHeaders' => 'RecipientNumber',
@@ -416,14 +417,15 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             'csvHeaders' => 'TaxNumber',
             'csvHeaders' => 'Iban'),
         CURLOPT_HTTPHEADER => array(
-                'X-API-KEY: ' . $this->resolveInputParameter('api_key')
-        ),
+            'X-API-KEY: ' .$this->resolveInputParameter('api_key')
+        )
         ));
 
         $response = curl_exec($curl);
 
         error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
 
+        error_log(curl_error($curl));
         curl_close($curl);
 
 
