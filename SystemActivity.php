@@ -347,7 +347,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         fclose($csvFile);
         
-        /*  
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors/import",
@@ -385,50 +384,10 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         $response = curl_exec($curl);
             
-        error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
+        error_log(print_r($response ." ---- " .curl_getinfo($curl), true));
 
         curl_close($curl);
-        */
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.demo.pedant.ai/v1/external/entities/vendors/import',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'file'=> new CURLFILE($csvFilePath),
-            'csvHeaders' => 'profileName',
-            'csvHeaders' => 'internalNumber',
-            'csvHeaders' => 'RecipientNumber',
-            'csvHeaders' => 'Name',
-            'csvHeaders' => 'Street',
-            'csvHeaders' => 'City',
-            'csvHeaders' => 'Country',
-            'csvHeaders' => 'ZipCode',
-            'csvHeaders' => 'Currency',
-            'csvHeaders' => 'KVK',
-            'csvHeaders' => 'VatNumber',
-            'csvHeaders' => 'TaxNumber',
-            'csvHeaders' => 'Iban'),
-        CURLOPT_HTTPHEADER => array(
-            'X-API-KEY: ' .$this->resolveInputParameter('api_key')
-        ),
-        CURLOPT_SSL_VERIFYPEER => 0
-        ));
-
-        $response = curl_exec($curl);
-
-        error_log(print_r($response ." ---- " .curl_getinfo($curl, CURLINFO_HTTP_CODE), true));
-        error_log(curl_error($curl));
-
-
-        curl_close($curl);
         unlink($csvFilePath);
 
     }
