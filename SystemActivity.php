@@ -490,8 +490,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $values5 = [
             0,
             $data["data"][0]["rejectReason"],
-            isset($data["data"][0]["rejectionType"][0]) ? $data["data"][0]["rejectionType"][0]["code"] : null,
-            isset($data["data"][0]["rejectionType"][0]) ? $data["data"][0]["rejectionType"][0]["type"] : null
+            isset($data["data"][0]["rejectionType"]) ? $data["data"][0]["rejectionType"]["code"] : null,
+            isset($data["data"][0]["rejectionType"]) ? $data["data"][0]["rejectionType"]["type"] : null
         ];
         foreach ($attributes5 as $attribute) {
             $this->setTableValue($attribute['value'], $values5[$attribute['id']]);
