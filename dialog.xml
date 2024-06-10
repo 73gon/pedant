@@ -24,7 +24,7 @@
 					<list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
 					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                     <list id='auditTrailDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-                    <list id='rejectionDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+                    <list id='rejectionDetails' name='REJECTIONDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                 </outputParameters> 
 			</function>
             <function id='pedant2' name='VENDOR' description='VENDOR_DESC'>
