@@ -24,6 +24,7 @@
 					<list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
 					<list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                     <list id='auditTrailDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
+                    <list id='rejectionDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                 </outputParameters> 
 			</function>
             <function id='pedant2' name='VENDOR' description='VENDOR_DESC'>
@@ -41,11 +42,6 @@
                     <field id='error' name='ERROR' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
                     <field id='errorMessage' name='ERRORMESSAGE' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
                     <field id='userData' name='USERDATA' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' />
-                    <list id='recipientDetails' name='RECIPIENTDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>					
-                    <list id='vendorDetails' name='VENDORDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-                    <list id='invoiceDetails' name='INVOICEDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-                    <list id='auditTrailDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
-                    <list id='rejectionDetails' name='AUDITTRAILDETAILS' worktable='yes' subtable='no' fixed='no' datatype='varchar' required='no' udl='yes'/>
                 </outputParameters> 
             </function>
         </functions>
