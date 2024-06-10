@@ -97,7 +97,6 @@ define('INVOICEDETAILS', 'Invoicedetails');
 	define('INVOICETYPE', 'Invoice Type');
 	define('NOTE', 'Message');	
 	define('STATUS', 'Status');
-	define('REJECTREASON', 'Reject Reason');
 	define('CURRENCY', 'Currency');
 	define('RESOLVEDISSUES', 'Resolved Issues');
 	define('EDITOR', 'Editor');
@@ -107,3 +106,7 @@ define('AUDITTRAILDETAILS', 'Audit Trail Details');
 	define('TYPE', 'Type');
 	define('SUBTYPE', 'Subtype');
 	define('COMMENT', 'Comment');	
+
+define('REJECTIONDETAILS', 'Rejection Details');
+	define('CODE', 'Code');
+	define('REJECTREASON', 'Reject Reason');	

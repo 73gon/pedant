@@ -98,7 +98,6 @@ define('INVOICEDETAILS', 'Rechnungsdaten');
 	define('INVOICETYPE', 'Rechnungsart');	
 	define('NOTE', 'Nachricht');	
 	define('STATUS', 'Status');	
-	define('REJECTREASON', 'Abweisungsgrund');	
 	define('CURRENCY', 'Währung');
 	define('RESOLVEDISSUES', 'Gelöste Probleme');
 	define('EDITOR', 'Bearbeiter');
@@ -109,5 +108,8 @@ define('AUDITTRAILDETAILS', 'Aufzeichnugskontrollendetails');
 	define('SUBTYPE', 'Untertyp');
 	define('COMMENT', 'Kommentar');
 
+define('REJECTIONDETAILS', 'Aufzeichnugskontrollendetails');
+	define('CODE', 'Code');
+	define('REJECTREASON', 'Abweisungsgrund');	
 
 	

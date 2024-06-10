@@ -437,7 +437,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         $attributes3 = $this->resolveOutputParameterListAttributes('invoiceDetails');
 
         $values3 = [0];
-
         for ($i = 0; $i < 10; $i++) {
             $values3[] = $data["data"][0]["taxRates"][$i]["subNetAmount"] . ";"
                 . $data["data"][0]["taxRates"][$i]["subTaxAmount"] . ";"
@@ -462,7 +461,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data["data"][0]["invoiceType"],
             $data["data"][0]["file"]["note"],
             $data["data"][0]["status"],
-            $data["data"][0]["rejectReason"],
             $data["data"][0]["currency"],
             $data["data"][0]["resolvedIssuesCount"]
         ];
@@ -487,8 +485,18 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($attributes4 as $attribute) {
             $this->setTableValue($attribute['value'], $values4[$attribute['id']]);
         }
-    }
 
+        $attributes5 = $this->resolveOutputParameterListAttributes('rejectionDetails');
+        $values5 = [
+            0,
+            $data["data"][0]["rejectReason"],
+            isset($data["data"][0]["rejectionType"][0]) ? $data["data"][0]["rejectionType"][0]["code"] : null,
+            isset($data["data"][0]["rejectionType"][0]) ? $data["data"][0]["rejectionType"][0]["type"] : null
+        ];
+        foreach ($attributes5 as $attribute) {
+            $this->setTableValue($attribute['value'], $values5[$attribute['id']]);
+        }
+    }
 
     public function getUDL($udl, $elementID)
     {
@@ -574,9 +582,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => INVOICETYPE, 'value' => '25'],
                 ['name' => NOTE, 'value' => '26'],
                 ['name' => STATUS, 'value' => '27'],
-                ['name' => REJECTREASON, 'value' => '28'],
-                ['name' => CURRENCY, 'value' => '29'],
-                ['name' => RESOLVEDISSUES, 'value' => '30']
+                ['name' => CURRENCY, 'value' => '28'],
+                ['name' => RESOLVEDISSUES, 'value' => '29']
             ];
         }
 
@@ -587,6 +594,15 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => TYPE, 'value' => '2'],
                 ['name' => SUBTYPE, 'value' => '3'],
                 ['name' => COMMENT, 'value' => '4']
+            ];
+        }
+
+        if ($elementID == 'rejectionDetails') {
+            return [
+                ['name' => '-', 'value' => ''],
+                ['name' => REJECTREASON, 'value' => '1'],
+                ['name' => CODE, 'value' => '2'],
+                ['name' => TYPE, 'value' => '3']
             ];
         }
         return null;
