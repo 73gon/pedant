@@ -108,7 +108,7 @@ define('AUDITTRAILDETAILS', 'Aufzeichnugskontrollendetails');
 	define('SUBTYPE', 'Untertyp');
 	define('COMMENT', 'Kommentar');
 
-define('REJECTIONDETAILS', 'Aufzeichnugskontrollendetails');
+define('REJECTIONDETAILS', 'Ablehnungsdetails');
 	define('CODE', 'Code');
 	define('REJECTREASON', 'Abweisungsgrund');	
 
