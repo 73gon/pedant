@@ -37,10 +37,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     protected function uploadFile()
     {
 
-        if (!empty($this->resolveInputParameter('vendorTable'))) {
-            $this->postVendorDetails();
-        }
-
         $curl = curl_init();
         $file = $this->getUploadPath() . $this->resolveInputParameter('inputFile');
         $action = 'normal';
@@ -99,6 +95,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     }
     protected function checkFile()
     {
+        if (!empty($this->resolveInputParameter('vendorTable'))) {
+            $this->postVendorDetails();
+        }
         
         $jobDB = $this->getJobDB();
         if (date("H") >= 6 && date("H") <= 24) {
