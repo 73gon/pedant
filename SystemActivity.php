@@ -291,7 +291,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         
         foreach ($list as $listindex => $listvalue) {
             if (!empty($listvalue)) {
-                if (in_array($fields[$listindex - 1], ['VatNumbers', 'TaxNumbers', 'ibans'])) {
+                if (in_array($fields[$listindex - 1], ['VatNumbers', 'TaxNumbers', 'Iban'])) {
                     $temp .= "GROUP_CONCAT(" . $listvalue . " SEPARATOR ',') AS " . $fields[$listindex - 1];
                 } else {
                     $temp .= $listvalue . " AS " . $fields[$listindex - 1];
@@ -314,9 +314,9 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $data = [];
 
             foreach ($fields as $index => $field) {
-                if (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans']) && isset($row[$fields[$index]]) && !empty($row[$fields[$index]])) {
+                if (in_array($field, ['VatNumber', 'TaxNumber', 'Iban']) && isset($row[$fields[$index]]) && !empty($row[$fields[$index]])) {
                     $data[$field] = $row[$fields[$index]];
-                } elseif (in_array($field, ['vatNumbers', 'taxNumbers', 'ibans'])) {
+                } elseif (in_array($field, ['VatNumber', 'TaxNumber', 'Iban'])) {
                     $data[$field] = '';
                 } else {
                     $data[$field] = isset($row[$fields[$index]]) && !empty($row[$fields[$index]]) ? $row[$fields[$index]] : '';
@@ -344,8 +344,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($csvData as $row) {
             fputcsv($csvFile, $row);
         }
-
-        fclose($csvFile);
         
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -357,6 +355,35 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
+
+            CURLOPT_POSTFIELDS => array(
+                'csvHeaders' => 'InternalNumber',
+                'csvHeaders' => 'ProfileName',
+                'csvHeaders' => 'Name',
+                'csvHeaders' => 'Street',
+                'csvHeaders' => 'ZipCode',
+                'csvHeaders' => 'City',
+                'csvHeaders' => 'Country',
+                'csvHeaders' => 'Iban',
+                'csvHeaders' => 'TaxNumber',
+                'csvHeaders' => 'VatNumber',
+                'fieldsToUpdate' => 'InternalNumber',
+                'fieldsToUpdate' => 'ProfileName',
+                'fieldsToUpdate' => 'Name',
+                'fieldsToUpdate' => 'Street',
+                'fieldsToUpdate' => 'ZipCode',
+                'fieldsToUpdate' => 'City',
+                'fieldsToUpdate' => 'Country',
+                'fieldsToUpdate' => 'Iban',
+                'fieldsToUpdate' => 'TaxNumber',
+                'fieldsToUpdate' => 'VatNumber',
+                'file' => new CURLFILE($csvFilePath),
+            ),
+            CURLOPT_HTTPHEADER => array(
+              'x-api-key: f3fdf5707d52a8d398146abb8f588b7b4ebed091379a03659db5ae00b72b95e3'
+            ),
+
+            /*
             CURLOPT_POSTFIELDS => array(
                 'file' => new CURLFILE($csvFilePath),
                 'csvHeaders' => 'InternalNumber',
@@ -406,13 +433,14 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                     'VatNumber'
                 )
             ),
-            */
+
             CURLOPT_HTTPHEADER => array(
                 'X-API-KEY: ' . $this->resolveInputParameter('api_key')
             ),
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLINFO_HEADER_OUT => true
+            */
         ));
 
         $response = curl_exec($curl);
