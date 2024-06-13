@@ -521,8 +521,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 ['name' => COUNTRY, 'value' => '7'],
                 ['name' => BANKNUMBER, 'value' => '8'],
                 ['name' => TAXNUMBER, 'value' => '9'],
-                ['name' => VAT, 'value' => '10'],
-                ['name' => VAT, 'value' => '11']
+                ['name' => VAT, 'value' => '10']
             ];
         }
 
