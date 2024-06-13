@@ -267,7 +267,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     {
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
-        $fields = ['InternalNumber', 'ProfileName', 'Name', 'Street', , 'ZipCode', 'City', 'Country', 'Iban', 'TaxNumber', 'VatNumber'];
+        $fields = ['InternalNumber', 'ProfileName', 'Name', 'Street', 'ZipCode', 'City', 'Country', 'Iban', 'TaxNumber', 'VatNumber'];
 
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
