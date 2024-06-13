@@ -453,6 +453,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         curl_close($curl);
 
+        unlink($csvFilePath);
 
     }
 
