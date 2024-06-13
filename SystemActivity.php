@@ -379,7 +379,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 'fieldsToUpdate' => 'Iban',
                 'fieldsToUpdate' => 'TaxNumber',
                 'fieldsToUpdate' => 'VatNumber',
-                'file' => new CURLFILE($csvFilePath),
+                'file' => new CURLFILE('./systemactivities/pedant/test.csv'),
             ),
             CURLOPT_HTTPHEADER => array(
               'x-api-key: f3fdf5707d52a8d398146abb8f588b7b4ebed091379a03659db5ae00b72b95e3'
