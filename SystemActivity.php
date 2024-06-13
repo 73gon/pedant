@@ -337,10 +337,14 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             $csvData[] = $rowData;
         }
 
-        $csvString = '';
+        $csvFile = fopen('php://temp', 'r+');
+
         foreach ($csvData as $row) {
-            $csvString .= implode(',', $row) . "\n";
+            fputcsv($csvFile, $row);
         }
+
+        rewind($csvFile);
+        $csvContent = stream_get_contents($csvFile);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -373,7 +377,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                 'fieldsToUpdate' => 'Iban',
                 'fieldsToUpdate' => 'TaxNumber',
                 'fieldsToUpdate' => 'VatNumber',
-                'file' => $csvString,
+                'file' => new CURLFile('data:text/csv;base64,' . base64_encode($csvContent)),
             ),
             CURLOPT_HTTPHEADER => array(
               'x-api-key: f3fdf5707d52a8d398146abb8f588b7b4ebed091379a03659db5ae00b72b95e3'
