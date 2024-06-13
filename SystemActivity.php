@@ -359,6 +359,28 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
                 'file' => new CURLFILE($csvFilePath),
+                'csvHeaders' => 'InternalNumber',
+                'csvHeaders' => 'ProfileName',
+                'csvHeaders' => 'Name',
+                'csvHeaders' => 'Street',
+                'csvHeaders' => 'ZipCode',
+                'csvHeaders' => 'City',
+                'csvHeaders' => 'Country',
+                'csvHeaders' => 'Iban',
+                'csvHeaders' => 'TaxNumber',
+                'csvHeaders' => 'VatNumber',
+                'fieldsToUpdate' => 'InternalNumber',
+                'fieldsToUpdate' => 'ProfileName',
+                'fieldsToUpdate' => 'Name',
+                'fieldsToUpdate' => 'Street',
+                'fieldsToUpdate' => 'ZipCode',
+                'fieldsToUpdate' => 'City',
+                'fieldsToUpdate' => 'Country',
+                'fieldsToUpdate' => 'Iban',
+                'fieldsToUpdate' => 'TaxNumber',
+                'fieldsToUpdate' => 'VatNumber'
+            ),
+            /*
                 'csvHeaders' => array(
                     'InternalNumber',
                     'ProfileName',
@@ -384,6 +406,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
                     'VatNumber'
                 )
             ),
+            */
             CURLOPT_HTTPHEADER => array(
                 'X-API-KEY: ' . $this->resolveInputParameter('api_key')
             ),
