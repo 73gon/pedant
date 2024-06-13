@@ -345,7 +345,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         rewind($csvFile);
         $csvContent = stream_get_contents($csvFile);
-
+        error_log("CSV Content: " . $csvContent); // Log the CSV content
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.demo.pedant.ai/v1/external/entities/vendors/import",
