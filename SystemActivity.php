@@ -344,6 +344,8 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         foreach ($csvData as $row) {
             fputcsv($csvFile, $row);
         }
+
+        fclose($csvFile);
         
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -451,7 +453,6 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
 
         curl_close($curl);
 
-        unlink($csvFilePath);
 
     }
 
