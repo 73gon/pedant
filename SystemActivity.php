@@ -267,7 +267,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
     {
         $table = $this->resolveInputParameter('vendorTable');
         $listfields = $this->resolveInputParameterListValues('postVendor');
-        $fields = ['profileName', 'internalNumber', 'recipientNumber', 'name', 'street', 'city', 'country', 'zipCode', 'currency', 'kvk', 'vatNumbers', 'taxNumbers', 'ibans'];
+        $fields = ['InternalNumber', 'ProfileName', 'Name', 'Street', , 'ZipCode', 'City', 'Country', 'Iban', 'TaxNumber', 'VatNumber'];
 
         $list = array();
         foreach ($listfields as $listindex => $listvalue) {
@@ -291,7 +291,7 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         
         foreach ($list as $listindex => $listvalue) {
             if (!empty($listvalue)) {
-                if (in_array($fields[$listindex - 1], ['vatNumbers', 'taxNumbers', 'ibans'])) {
+                if (in_array($fields[$listindex - 1], ['VatNumbers', 'TaxNumbers', 'ibans'])) {
                     $temp .= "GROUP_CONCAT(" . $listvalue . " SEPARATOR ',') AS " . $fields[$listindex - 1];
                 } else {
                     $temp .= $listvalue . " AS " . $fields[$listindex - 1];
@@ -360,19 +360,28 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
             CURLOPT_POSTFIELDS => array(
                 'file' => new CURLFILE($csvFilePath),
                 'csvHeaders' => array(
-                    'ProfileName',
                     'InternalNumber',
-                    'RecipientNumber',
+                    'ProfileName',
                     'Name',
                     'Street',
+                    'ZipCode',
                     'City',
                     'Country',
-                    'ZipCode',
-                    'Currency',
-                    'KVK',
-                    'VatNumber',
+                    'Iban',
                     'TaxNumber',
-                    'IBAN'
+                    'VatNumber'
+                ),
+                'fieldsToUpdate' => array(
+                    'InternalNumber',
+                    'ProfileName',
+                    'Name',
+                    'Street',
+                    'ZipCode',
+                    'City',
+                    'Country',
+                    'Iban',
+                    'TaxNumber',
+                    'VatNumber'
                 )
             ),
             CURLOPT_HTTPHEADER => array(
@@ -503,20 +512,17 @@ class pedantSystemActivity extends AbstractSystemActivityAPI
         if ($elementID == 'postVendor') {
             return [
                 ['name' => '-', 'value' => ''],
-                ['name' => PROFILNAME, 'value' => '1'],
-                ['name' => INTERNALNUMBER, 'value' => '2'],
-                ['name' => RECIPIENTGROUPID, 'value' => '3'],
-                ['name' => VENDORCOMPANYNAME, 'value' => '4'],
-                ['name' => STREET, 'value' => '5'],
+                ['name' => INTERNALNUMBER, 'value' => '1'],
+                ['name' => PROFILNAME, 'value' => '2'],
+                ['name' => VENDORNAME, 'value' => '3'],
+                ['name' => STREET, 'value' => '4'],
+                ['name' => ZIPCODE, 'value' => '5'],
                 ['name' => CITY, 'value' => '6'],
                 ['name' => COUNTRY, 'value' => '7'],
-                ['name' => ZIPCODE, 'value' => '8'],
-                ['name' => CURRENCY, 'value' => '9'],
-                ['name' => KVK, 'value' => '10'],
-                ['name' => VAT, 'value' => '11'],
-                ['name' => TAXNUMBER, 'value' => '12'],
-                ['name' => BANKNUMBER, 'value' => '13'],
-                ['name' => LOCK , 'value' => '14']
+                ['name' => BANKNUMBER, 'value' => '8'],
+                ['name' => TAXNUMBER, 'value' => '9'],
+                ['name' => VAT, 'value' => '10'],
+                ['name' => VAT, 'value' => '11']
             ];
         }
 
